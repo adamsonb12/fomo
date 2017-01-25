@@ -14,6 +14,9 @@
     ## add any site-wide scripts or CSS here; for example, jquery:
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
+    <link rel="stylesheet" href="${ STATIC_URL }homepage/media/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="${ STATIC_URL }homepage/media/bootstrap/css/bootstrap-theme.min.css" />
+
     ## render the css with the same name as this page
     ${ get_template_css(self, request, context) }
 
@@ -21,12 +24,51 @@
   <body>
 
     <header>
-      Welcome to the homepage app!
+      <%block name="site_navbar">
+          <nav class="navbar navbar-default">
+            <div class="container-fluid">
+              <!-- Brand and toggle get grouped for better mobile display -->
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">FOMO</a>
+              </div>
+
+              <!-- Collect the nav links, forms, and other content for toggling -->
+              <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                  <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
+                  <li><a href="#">Shop</a></li>
+                  <li><a href="#">Contact</a></li>
+                </ul>
+                
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#">Login</a></li>
+                </ul>
+              </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+          </nav>
+        </div>
+      </%block>
     </header>
 
-    <%block name="content">
-      Site content goes here in sub-templates.
-    </%block>
+    <div id="content-catalog" class="container-fluid">
+      <%block name="content_catalog">
+        <div class="col-md-2"></div>
+        <div class="col-md-8"></div>
+        <div class="col-md-2"></div>
+      </%block>
+      </div>
+
+    <div id="content-homepage" class="container-fluid">
+      <%block name="content_homepage">
+
+      </%block>
+    </div>
 
     ## render the JS with the same name as this page
     ${ get_template_js(self, request, context) }
