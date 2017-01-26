@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_mako_plus',
     'homepage',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -124,6 +125,9 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+#Conan Albreich told me to add this to elimate errors
+AUTH_USER_MODEL = 'account.FomoUser'
 
 
 # Password validation
