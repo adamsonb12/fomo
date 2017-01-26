@@ -9,7 +9,7 @@
   <meta charset="UTF-8">
   <head>
 
-    <title>homepage</title>
+    <%block name="title"><title>Family Music</title></%block>
 
     ## add any site-wide scripts or CSS here; for example, jquery:
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -22,6 +22,12 @@
 
   </head>
   <body>
+
+  <%block name="header_message">
+    <div class="alert alert-danger" role="alert">
+      <p> We will be conducting maintenence on this site at 3 a.m. on Feb 2, 2017 </p>
+    </div>
+  </%block>
 
     <header>
       <%block name="site_navbar">

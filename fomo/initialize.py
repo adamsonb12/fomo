@@ -6,7 +6,7 @@ import django
 django.setup()
 from account.models import FomoUser #account models
 
-# Create 4 users
+# Create 4 users below with variables
 
 # user1 = FomoUser()
 
@@ -52,14 +52,21 @@ from account.models import FomoUser #account models
 # user4.gender = "F"
 # user4.save()
 
+## prints all the users' genders with the gender 'Unknown'
+# users = FomoUser.objects.filter(gender='unknown')
+# for u in users:
+# 	print(u.gender)
 
+## gets a user witht the username "user3" and prints it
 # u1 = FomoUser.objects.get(username='user3')
 # print('My name is ' + u1.first_name + ' ' + u1.last_name + ' and my password is ' + u1.password)
 
+## prints all users who have "M" as their gender
 # users = FomoUser.objects.filter(gender='M')
 # for u in users:
 # 	print(u.username)
 
+## prints all the users who do not have the username "user4"
 # users = FomoUser.objects.exclude(username='user4')
 # for u in users:
 # 	print(u.last_name)

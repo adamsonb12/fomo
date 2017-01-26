@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser
 
 # The models for the Account application
 
+
+## Model for Fomo's Users
 class FomoUser(AbstractUser):
 
 	###The fields commented below are inherited from the AbstractBaseUsser and AbstractUser classes
@@ -13,6 +15,14 @@ class FomoUser(AbstractUser):
     # password
     # email
     # last_login
+
+    #Gender Types
+
+    GENDER_CHOICES = (
+    	('male', 'Male'),
+    	('female', 'Female'),
+    	('unknown', 'Unknown'),
+    )
         
     birth_date = models.DateTimeField('Birth Date')
-    gender = models.TextField(null=True)
+    gender = models.TextField(choices=GENDER_CHOICES, default = 'unknown',)
