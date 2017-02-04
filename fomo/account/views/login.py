@@ -12,6 +12,10 @@ def process_request(request):
 	user = authenticate(username=username, password=password)
 	if user is not None:
 	    login(request,user)
-		return HttpResponseRedirect('/account/index/')
-	return HttpResponseRedirect('/')
+
+		# return HttpResponseRedirect('/account/index/')
+
+	# return HttpResponseRedirect('/')
+
+	return HttpResponseRedirect('/account/index')
 	    
