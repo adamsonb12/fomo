@@ -5,7 +5,7 @@ from .. import dmp_render, dmp_render_to_string
 
 @view_function
 def process_request(request):
-    context = { 
+    context = {
         'now': datetime.now(),
     }
-    return dmp_render(request, 'index.html', context)
+    return dmp_render(request, 'base.html', context)

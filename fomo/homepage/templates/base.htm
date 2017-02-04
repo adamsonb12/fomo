@@ -12,7 +12,6 @@
     <%block name="title"><title>Family Music</title></%block>
 
     ## add any site-wide scripts or CSS here; for example, jquery:
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="${ STATIC_URL }homepage/media/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="${ STATIC_URL }homepage/media/bootstrap/css/bootstrap-theme.min.css" />
@@ -29,9 +28,16 @@
     </div>
   </%block>
 
-    <%block name="site_navbar">
+  <%block name="alert_block">
+    <div id="alert_block" class="alert alert-block col-md-4 col-md-offset-8">
+      <h4> Warning! </h4>
+      <p> This is a dangerous site, watch out for weird things </p>
+    </div>
+  </%block>
+
       <header>
           <nav id="mainnav" class="navbar navbar-default">
+          <%block name="site_navbar">
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->
               <div class="navbar-header">
@@ -42,7 +48,7 @@
                   <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/homepage/index">
-                  <img class="icon-bar" src="${ STATIC_URL }/homepage/media/img/fomo.png">
+                  <img class="icon-bar" src="${ STATIC_URL }homepage/media/img/fomo.png">
                 </a>
                 <!-- <a class="navbar-brand" href="/homepage/index">FOMO</a> -->
               </div>
@@ -78,24 +84,28 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                  <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a> 
-                    <ul class="dropdown-menu">
-                      <li><a href="#">Sign Up!</a></li>
-                      <li><a href="#">Login</a></li>
-                      <li><a href="#">Something else here</a></li>
-                      <li role="separator" class="divider"></li>
-                      <li><a href="#">Separated link</a></li>
-                    </ul>
-                  </li>
+                  
+                  %if user.is_authenticated:
+                    <li class="dropdown">
+                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">asd<span class="caret"></span></a> 
+                      <ul class="dropdown-menu">
+                        <li><a href="#">My Account</a></li>
+                        <li><a href="#">History</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Log Out</a></li>
+                      </ul>
+                    </li>
+                    %else:
+                      <li class="${ 'active' if request.dmp_router_page == 'login' else ''}">
+                        <a href="/account/login">Login/Register</a>
+                      </li>
                 </ul>
 
               </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
+            </%block>
           </nav>
-        </div>
       </header>
-    </%block>
 
     <%block name="above_columns"></%block>
 
@@ -145,23 +155,17 @@
     ## render the JS with the same name as this page
     ${ get_template_js(self, request, context) }
 
-  </body>
-</html>
-
-    <!-- jQuery -->
-    <script
-      src="https://code.jquery.com/jquery-3.1.1.min.js"
-      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-      crossorigin="anonymous"></script>
-
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="/static/homepage/media/js/bootstrap.min.js"></script>
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 
-    <!-- Theme JavaScript -->
-    <script src="/static/homepage/scripts/base.js"></script>
+  </body>
+</html>
+
+    
 
 
 

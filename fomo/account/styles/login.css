@@ -1,0 +1,11 @@
+.login-box {
+  border-style: solid;
+  border-color: black;
+  padding-bottom: 10px;
+  border-width: thin;
+  border-radius: 5px;
+}
+
+h3 {
+  text-align: center;
+}

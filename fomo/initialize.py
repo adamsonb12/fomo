@@ -6,11 +6,11 @@ import django
 django.setup()
 from account.models import FomoUser #account models
 
-# Create 4 users below with variables
+# Create 4 users below with variables // Only run if the database has been cleared or the following users have been commented out
 
 user1 = FomoUser()
 
-user1.password = "password"
+user1.set_password = "password"
 user1.username = "user1"
 user1.first_name = "Cassie"
 user1.last_name = "Adamson"
@@ -21,7 +21,7 @@ user1.save()
 
 user2 = FomoUser()
 
-user2.password = "password"
+user2.set_password = "password"
 user2.username = "user2"
 user2.first_name = "Brooke"
 user2.last_name = "Harrison"
@@ -32,7 +32,7 @@ user2.save()
 
 user3 = FomoUser()
 
-user3.password = "password"
+user3.set_password = "password"
 user3.username = "user3"
 user3.first_name = "Brett"
 user3.last_name = "Adamson"
@@ -43,7 +43,7 @@ user3.save()
 
 user4 = FomoUser()
 
-user4.password = "password"
+user4.set_password = "password"
 user4.username = "user4"
 user4.first_name = "Trently"
 user4.last_name = "Harrison"

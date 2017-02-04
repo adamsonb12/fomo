@@ -26,3 +26,5 @@ class FomoUser(AbstractUser):
         
     birth_date = models.DateTimeField('Birth Date')
     gender = models.TextField(null=True, blank=True, choices=GENDER_CHOICES, default = 'other',)
+
+

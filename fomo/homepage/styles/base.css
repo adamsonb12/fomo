@@ -8,6 +8,14 @@
 	margin-bottom: 0px;
 }
 
+#alert_block {
+	max-width: 500px;
+	position: absolute;
+	margin-top: 53px;
+	float: right;
+	background-color: yellow;
+}
+
 /* Nav Css */
 
 .icon-bar {

@@ -1,8 +1,25 @@
-<%inherit file="base.htm" />
+<%inherit file="app_base.htm" />
 
-<%block name="content">
-    <div class="content">
-      <h3>Congratulations -- you've successfully created a new django-mako-plus app!</h3>
-      <h4>Next Up: Go through the django-mako-plus tutorial and add Javascript, CSS, and urlparams to this page.</h4>
-    </div>
+<%block name="header_message">
 </%block>
+
+<%block name="alert_block"></%block>
+
+<!-- New Nav -->
+
+<%block name="content_catalog">
+      <div id="content-catalog" class="container-fluid">
+        <div id="left_column" class="col-md-2 col-xs-12"> <!-- Left Column -->
+          Logged in Left Column
+        </div>
+        <div id="middle_content" class="col-md-8 col-xs-12"> <!-- Middle Section -->
+          <div class="alert alert-info">
+          	<h2> Congradulations! </h2>
+          	<p> You have successfully logged into your account </p>
+          </div>
+        </div>
+        <div id="right_column" class="col-md-2 col-xs-12"> <!-- Right Column -->
+          Logged in right column
+        </div>
+      </div>
+    </%block>

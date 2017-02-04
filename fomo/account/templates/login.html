@@ -1,1 +1,55 @@
-<%inherit file="app_base.htm"/>
+<%inherit file="app_base.htm" />
+
+<%block name="header_message">
+</%block>
+
+<%block name="alert_block"></%block>
+
+<%block name="above_columns"></%block>
+
+<%block name="content_catalog"></%block>
+
+    <%block name="content_homepage">
+        <div id="content-homepage" class="container">
+
+        	<section class="login-box col-md-4 col-md-offset-4 col-xs-12">
+
+		      <h3>Employee Login</h3>
+
+		      <form id="employee-login">
+
+		        <div class="control-group form-group">
+		          <div class="controls">
+		            <label for="username">Username:</label>
+		            <input type="text"
+		                   placeholder="JohnDoe1"
+		                   class="form-control"
+		                   id="username"
+		                   required data-validation-required-message="Please enter your name"
+		                   name="username">
+		          </div>
+		        </div>
+
+		        <div class="control-group form-group">
+		          <div class="controls">
+		            <label for="password">Password</label>
+		            <input type="password"
+		                   placeholder="password"
+		                   class="form-control"
+		                   id="password"
+		                   required data-validation-required-message="Please enter the employee's title."
+		                   name="password">
+		          </div>
+		        </div>
+
+		        <button type="submit" class="btn btn-success">Login</button>
+		        <button type="submit" class="btn btn-warning">Sign Up</button>
+		        <!-- <button type="submit" class="btn btn-info">Sign Up with Google</button>
+		        <button type="submit" class="btn btn-primary">Sign Up with Facebook</button> -->
+
+		      </form>
+
+		  </section>
+
+        </div>
+    </%block>
