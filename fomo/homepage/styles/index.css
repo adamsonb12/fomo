@@ -1,0 +1,144 @@
+/* The whole homepage CSS*/
+
+.content {
+  margin-top: -30px;
+}
+
+/* Content 1 */
+
+.head_info {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+@media (min-width: 1010px) {
+  #col1 {
+    border-right-style: solid;
+    border-right-width: thin;
+  }
+
+  #col2 {
+    border-right-style: solid;
+    border-right-width: thin;
+  }
+
+  #col3 {
+    border-right-style: solid;
+    border-right-width: thin;
+  }
+}
+
+@media (max-width: 1009px) {
+  #col1 {
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+  }
+
+  #col2 {
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+  }
+
+  #col3 {
+    border-bottom-style: solid;
+    border-bottom-width: thin;
+  }
+}
+
+.col-md-3 {
+  text-align: center;
+}
+
+.col-xs-12 {
+  text-align: center;
+}
+
+.icon {
+  font-size: 32px;
+}
+
+/* Middle Info */
+
+.middle_info {
+  text-align: center;
+  background-color: #413D3D;
+  height: 400px;
+  font-size: 4em;
+  padding-top: 40px;
+}
+
+/* last info */
+
+.last_info {
+  text-align: center;
+  height: 400px;
+  font-size: 4em;
+  padding-top: 40px;
+}
+
+/* CSS for the Head intro to the homepage with the image and title plus a call to action*/
+
+header .container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+header img {
+  display: block;
+  margin: 0 auto 20px;
+  border-radius: 10px;
+}
+header .name {
+  display: block;
+  /*font-family: 'Bree Serif', Georgia, Helvetica, serif;*/
+  text-transform: uppercase;
+  font-weight: 550;
+  font-size: 5em;
+}
+
+header .intro-text {
+  font-size: 1.55em;
+  font-weight: 300;
+}
+@media (min-width: 768px) {
+  header .container {
+    padding-bottom: 100px;
+  }
+  header .intro-text .name {
+    font-size: 4.75em;
+  }
+  header .intro-text .skills {
+    font-size: 1.75em;
+  }
+}
+
+#header-text {
+  text-align: center;
+}
+
+.intro-homepage {
+    display: table;
+    width: 100%;
+    padding: 225px 0;
+    text-align: center;
+    color: #fff;
+    background: url(/static/homepage/media/img/citymusic.jpg) no-repeat bottom center scroll;
+    height: 600px;
+    background-color: #000;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

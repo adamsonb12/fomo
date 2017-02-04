@@ -29,9 +29,9 @@
     </div>
   </%block>
 
-    <header>
-      <%block name="site_navbar">
-          <nav class="navbar navbar-default">
+    <%block name="site_navbar">
+      <header>
+          <nav id="mainnav" class="navbar navbar-default">
             <div class="container-fluid">
               <!-- Brand and toggle get grouped for better mobile display -->
               <div class="navbar-header">
@@ -41,45 +41,128 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">FOMO</a>
+                <a class="navbar-brand" href="/homepage/index">
+                  <img class="icon-bar" src="${ STATIC_URL }/homepage/media/img/fomo.png">
+                </a>
+                <!-- <a class="navbar-brand" href="/homepage/index">FOMO</a> -->
               </div>
 
               <!-- Collect the nav links, forms, and other content for toggling -->
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                  <li class="active"><a href="#">Home<span class="sr-only">(current)</span></a></li>
-                  <li><a href="#">Shop</a></li>
-                  <li><a href="#">Contact</a></li>
+
+                  <li class="${ 'active' if request.dmp_router_page == 'index' else ''}">
+                    <a href="/homepage/index">Home</a>
+                  </li>
+
+                  <li class="${ 'active' if request.dmp_router_page == 'catalog' else ''}">
+                    <a href="#">Shop</a>
+                  </li>
+
+                  <li class="${ 'active' if request.dmp_router_page == 'about' else ''}">
+                    <a href="/homepage/about">About</a>
+                  </li>
+
+                  <li class="${ 'active' if request.dmp_router_page == 'contact' else ''}">
+                    <a href="/homepage/contact">Contact</a>
+                  </li>
+
+                  <li class="${ 'active' if request.dmp_router_page == 'sections' else ''}">
+                    <a href="/homepage/sections">Sections</a>
+                  </li>
+
+                  <li class="${ 'active' if request.dmp_router_page == 'faqs' else ''}">
+                    <a href="/homepage/faqs">FAQs</a>
+                  </li>
+
                 </ul>
-                
+
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a href="#">Login</a></li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a> 
+                    <ul class="dropdown-menu">
+                      <li><a href="#">Sign Up!</a></li>
+                      <li><a href="#">Login</a></li>
+                      <li><a href="#">Something else here</a></li>
+                      <li role="separator" class="divider"></li>
+                      <li><a href="#">Separated link</a></li>
+                    </ul>
+                  </li>
                 </ul>
+
               </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
           </nav>
         </div>
-      </%block>
-    </header>
+      </header>
+    </%block>
 
-    <div id="content-catalog" class="container-fluid">
-      <%block name="content_catalog">
-        <div class="col-md-2"></div>
-        <div class="col-md-8"></div>
-        <div class="col-md-2"></div>
-      </%block>
+    <%block name="above_columns"></%block>
+
+    <%block name="content_catalog">
+      <div id="content-catalog" class="container-fluid">
+        <div id="left_column" class="col-md-2 col-xs-12"> <!-- Left Column -->
+          
+        </div>
+        <div id="middle_content" class="col-md-8 col-xs-12"> <!-- Middle Section -->
+          
+        </div>
+        <div id="right_column" class="col-md-2 col-xs-12"> <!-- Right Column -->
+          
+        </div>
       </div>
+    </%block>
 
-    <div id="content-homepage" class="container-fluid">
-      <%block name="content_homepage">
+    <%block name="content_homepage">
+        <div id="content-homepage" class="container-fluid">
 
-      </%block>
-    </div>
+        </div>
+    </%block>
+    
+    <%block name="hr"> <hr> </%block>
 
-    <div class=""
+    <%block name="footer">
+    <div class="clear"></div>
+      <div id="footer" class="container">
+        <div class="footer-brand">
+          Family Oriented Music Organization 
+        </div>
+        <div class="footer-links">
+          <a href="/homepage/contact">Contact</a> 
+          <span></span>
+          <a href="/homepage/about">About Us</a> 
+          <span></span>
+          <a href="/homepage/terms">Terms and Conditions</a> 
+          <span></span>
+          <a href="/homepage/returns">Return Policies</a>
+        </div>
+        <div class="footer-copyright">
+          <span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span> Family Oriented Music Organization, Inc
+        </div>
+      </div>  
+    </%block>
 
     ## render the JS with the same name as this page
     ${ get_template_js(self, request, context) }
 
   </body>
 </html>
+
+    <!-- jQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="/static/homepage/media/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="/static/homepage/scripts/base.js"></script>
+
+
+
+

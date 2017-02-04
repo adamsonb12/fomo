@@ -1,0 +1,59 @@
+.clear {
+	clear: both;
+}
+
+/* Header message CSS */
+
+#header_message {
+	margin-bottom: 0px;
+}
+
+/* Nav Css */
+
+.icon-bar {
+	/* Icon font is 'playball' */
+	width: 100px;
+	margin-right: -25px;
+}
+
+/* Catalog CSS */
+
+#left_column {
+	background-color: blue;
+}
+
+#middle_content {
+	background-color: green;
+}
+
+#right_column {
+	background-color: yellow;
+}
+
+/* Footer CSS*/
+#footer {
+	padding-bottom: 15px;
+}
+
+.footer-brand {
+	text-align: center;
+	padding: 3px;
+}
+
+.footer-links {
+	text-align: center;
+	padding: 3px;
+}
+
+.footer-links a {
+	padding: 0 5px 0 5px;
+}
+
+.footer-copyright {
+	text-align: center;
+	padding: 3px;
+}
+
+hr {
+  border-color: #413D3D;
+}

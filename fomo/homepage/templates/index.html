@@ -3,12 +3,71 @@
 <%block name="header_message">
 </%block>
 
+<%block name="content_catalog"></%block>
+
 <%block name="content_homepage">
     <div class="content">
-    <h1>hq is here</h1>
-      <h3>Congratulations -- you've successfully created a new django-mako-plus app!</h3>
-      <h4>Next Up: Go through the django-mako-plus tutorial and add Javascript, CSS, and urlparams to this page.</h4>
-      <p class="server-time">The current server time is ${ now }.</p>
-      <p class="browser-time">The current browser time is...</p>
+     <!-- Header stuff with the cool image -->
+        <header class="intro-homepage">
+            <div class="intro-body">
+                <div class="container">
+                    <div class="row">
+                        <div id="header-text" class="col-md-12 col-xs-12">
+                            <h1 class="name">FOMO</h1>
+                            <button class="btn btn-default">Spend Money</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+     <!-- Some info to draw them in -->
+
+     <section class="head_info container">
+
+        <div id="col1" class="col-md-3 col-xs-12">
+            <div class="icon">
+                <span class="glyphicon glyphicon-music" aria-hidden="true"></span>
+            </div>
+
+            <h4> Purchase Instruments </h4>
+        </div>
+        <div id="col2" class="col-md-3 col-xs-12">
+        <div class="icon">
+                <span class="glyphicon glyphicon-ruble" aria-hidden="true"></span>
+            </div>
+
+            <h4> Rent Instruments </h4>
+        </div>
+        <div id="col3" class="col-md-3 col-xs-12">
+        <div class="icon">
+                <span class="glyphicon glyphicon-education" aria-hidden="true"></span>
+            </div>
+
+            <h4> Professional Lessons </h4>
+        </div>
+        <div id="col4" class="col-md-3 col-xs-12">
+        <div class="icon">
+                <span class="glyphicon glyphicon-headphones" aria-hidden="true"></span>
+            </div>
+
+            <h4> Accessories </h4>
+        </div>
+
+     </section>
+
+     <!-- Send them somewhere -->
+
+     <section class="middle_info">
+        We are FOMO
+     </section>
+
+     <!-- Sum info -->
+
+     <section class="last_info">
+        Woooooo
+     </section>
+
     </div>
+
 </%block>

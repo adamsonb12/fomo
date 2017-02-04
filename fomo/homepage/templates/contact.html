@@ -1,0 +1,85 @@
+<%inherit file="base.htm" />
+
+<%block name="header_message"></%block>
+
+ <%block name="content_catalog">
+  <div id="content-catalog" class="container">
+    
+      <h1> Contact Us </h1>
+
+      		<div class="row">
+
+			  <form id="email-form">
+
+			    <div class="control-group form-group">
+			      <div class="controls">
+			        <label for="namefull">Full Name:</label>
+			        <input type="text"
+			               placeholder="John Doe"
+			               class="form-control"
+			               id="namefull"
+			               required data-validation-required-message="Please enter you
+			               name="namefull">
+			      </div>
+			    </div>
+
+			    <div class="control-group form-group">
+			      <div class="controls">
+			        <label for="userphone">Phone Number:</label>
+			        <input type="tel"
+			               placeholder="801-555-555"
+			               class="form-control"
+			               id="userphone"
+			              
+			               name="userphone"
+			               pattern="^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$">
+			      </div>
+			    </div>
+
+			    <div class="control-group form-group">
+			      <div class="controls">
+			        <label for="useremail">Your Email Address:</label>
+			        <input type="email"
+			               placeholder="johndoe@gmail.com"
+			               class="form-control"
+			               id="useremail"
+			               required data-validation-required-message="Please enter a valid email address."
+			               name="useremail">
+			      </div>
+			    </div>
+
+			    <div class="control-group form-group">
+			      <div class="controls">
+			        <label for="emailsubject">Subject:</label>
+			        <input type="text"
+			               placeholder="Subject"
+			               maxlength="50"
+			               class="form-control"
+			               id="emailsubject"
+			               required data-validation-required-message="Please enter a message subject."
+			               name="emailsubject">
+			      </div>
+			    </div>
+
+			    <div class="control-group form-group">
+			      <div class="controls">
+			        <label for="emailmessage">Message:</label>
+			        <textarea rows="8"
+			                  cols="100"
+			                  placeholder="Message"
+			                  class="form-control"
+			                  id="emailmessage"
+			                  required data-validation-required-message="Please enter your message"
+			                  maxlength="999"
+			                  name="emailmessage"></textarea>
+			      </div>
+			    </div>
+
+			    <button type="submit" class="btn btn-success">Send Message</button>
+
+			  </form>
+
+		</div>
+    
+  </div>
+</%block>	
