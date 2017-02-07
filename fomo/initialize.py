@@ -4,7 +4,21 @@ from datetime import datetime
 os.environ['DJANGO_SETTINGS_MODULE'] = 'fomo.settings'
 import django
 django.setup()
+
+# for our project
 from account.models import FomoUser #account models
+from django.contrib.auth.models import Permission, Group
+
+# Create some default permissions
+
+# Create our Groups
+
+g1 = Group()
+g1.name = 'Salespeople'
+g1.save()
+g1.permissions.add(Permission.objects.get(codename='add_fomouser'))
+g1.permissions.add(Permission.objects.get(codename='change_fomouser'))
+g1.permissions.add(Permission.objects.get(codename='delete_fomouser'))
 
 # Create 4 users below with variables // Only run if the database has been cleared or the following users have been commented out
 
@@ -17,6 +31,8 @@ user1.last_name = "Adamson"
 user1.email = "user1@byu.edu"
 user1.birth_date = datetime(1996,2,2)
 user1.gender = "female"
+user1.is_staff = True
+user1.is_superuser = True
 user1.save()
 
 user2 = FomoUser()
@@ -52,24 +68,27 @@ user4.birth_date = datetime(1992,8,14)
 user4.gender = "female"
 user4.save()
 
-## prints all the users' genders with the gender 'Other'
-users = FomoUser.objects.filter(gender='other')
-for u in users:
-	print(u.first_name)
+p = Permission.objects.get(codename='add_fomouser')
+user1.user_permissions.add(p) # gives user1 the permission to add users
 
-## gets a user witht the username "user3" and prints it
-u1 = FomoUser.objects.get(username='user3')
-print('My name is ' + u1.first_name + ' ' + u1.last_name + ' and my password is ' + u1.password)
+# ## prints all the users' genders with the gender 'Other'
+# users = FomoUser.objects.filter(gender='other')
+# for u in users:
+# 	print(u.first_name)
 
-## prints all users who have "M" as their gender
-users = FomoUser.objects.filter(gender='male')
-for u in users:
-	print(u.username)
+# ## gets a user witht the username "user3" and prints it
+# u1 = FomoUser.objects.get(username='user3')
+# print('My name is ' + u1.first_name + ' ' + u1.last_name + ' and my password is ' + u1.password)
 
-## prints all the users who do not have the username "user4"
-users = FomoUser.objects.exclude(username='user4')
-for u in users:
-	print(u.last_name)
+# ## prints all users who have "M" as their gender
+# users = FomoUser.objects.filter(gender='male')
+# for u in users:
+# 	print(u.username)
+
+# ## prints all the users who do not have the username "user4"
+# users = FomoUser.objects.exclude(username='user4')
+# for u in users:
+# 	print(u.last_name)
 
 
 
