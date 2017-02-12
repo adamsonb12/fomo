@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'polymorphic',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django_mako_plus',
     'homepage',
     'account',
+    'catalog',
 ]
 
 MIDDLEWARE = [

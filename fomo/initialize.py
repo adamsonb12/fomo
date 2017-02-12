@@ -1,13 +1,16 @@
 import os
-from datetime import datetime
 # initialize the django environment
 os.environ['DJANGO_SETTINGS_MODULE'] = 'fomo.settings'
 import django
 django.setup()
 
 # for our project
-from account.models import FomoUser #account models
 from django.contrib.auth.models import Permission, Group
+from datetime import datetime
+from decimal import Decimal
+
+from account import models as amod #account models
+from catalog import models as cmod #catalog models
 
 # Create some default permissions
 
@@ -22,7 +25,7 @@ g1.permissions.add(Permission.objects.get(codename='delete_fomouser'))
 
 # Create 4 users below with variables // Only run if the database has been cleared or the following users have been commented out
 
-user1 = FomoUser()
+user1 = amod.FomoUser()
 
 user1.set_password = "password"
 user1.username = "user1"
@@ -35,7 +38,7 @@ user1.is_staff = True
 user1.is_superuser = True
 user1.save()
 
-user2 = FomoUser()
+user2 = amod.FomoUser()
 
 user2.set_password = "password"
 user2.username = "user2"
@@ -46,7 +49,7 @@ user2.birth_date = datetime(1994,6,17)
 user2.gender = "other"
 user2.save()
 
-user3 = FomoUser()
+user3 = amod.FomoUser()
 
 user3.set_password = "password"
 user3.username = "user3"
@@ -57,7 +60,7 @@ user3.birth_date = datetime(1993,5,11)
 user3.gender = "male"
 user3.save()
 
-user4 = FomoUser()
+user4 = amod.FomoUser()
 
 user4.set_password = "password"
 user4.username = "user4"
@@ -90,13 +93,21 @@ user1.user_permissions.add(p) # gives user1 the permission to add users
 # for u in users:
 # 	print(u.last_name)
 
+# Cerate a category
+cat1 = cmod.Category()
+cat1.codename = 'kids'
+cat1.name = 'Kids Toy Products'
+cat1.save()
 
-
-
-
-
-
-
+# Create a Bulk Product
+p1 = cmod.BulkProduct()
+p1.name = 'Kazoo'
+p1.category = cat1
+p1.price = Decimal('9.50')
+p1.quantity = 20
+p1.reorder_trigger = 5
+p1.reorder_quantity = 30
+p1.save()
 
 
 

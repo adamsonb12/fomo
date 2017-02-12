@@ -57,23 +57,49 @@
   font-size: 32px;
 }
 
-/* Middle Info */
+/* Sections Info */
 
-.middle_info {
-  text-align: center;
-  background-color: #413D3D;
-  height: 400px;
-  font-size: 4em;
-  padding-top: 40px;
+img {
+  border-radius: 3px;
 }
 
-/* last info */
-
-.last_info {
+.info_sections h2 {
+  font-size: 2.8em;
   text-align: center;
-  height: 400px;
-  font-size: 4em;
-  padding-top: 40px;
+}
+
+.info_sections p {
+  text-align: left;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.info_sections h4 {
+  text-align: left;
+  padding-left: 5%;
+}
+
+.info {
+  padding: 25px 0 25px 0;
+}
+
+#buy {
+  background-color: #413D3D;
+}
+
+#buy_info {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+#rent {
+}
+
+#lessons {
+  background-color: #413D3D;
+}
+
+#other {
 }
 
 /* CSS for the Head intro to the homepage with the image and title plus a call to action*/
@@ -89,10 +115,10 @@ header img {
 }
 header .name {
   display: block;
-  /*font-family: 'Bree Serif', Georgia, Helvetica, serif;*/
+  font-family: 'Bree Serif', Georgia, Helvetica, serif;
   text-transform: uppercase;
-  font-weight: 550;
-  font-size: 5em;
+  font-weight: 800;
+  font-size: 8em;
 }
 
 header .intro-text {
@@ -121,7 +147,7 @@ header .intro-text {
     padding: 225px 0;
     text-align: center;
     color: #fff;
-    background: url(/static/homepage/media/img/citymusic.jpg) no-repeat bottom center scroll;
+    background: url(/static/homepage/media/img/dude.jpg) no-repeat bottom center scroll;
     height: 600px;
     background-color: #000;
     -webkit-background-size: cover;

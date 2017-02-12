@@ -39,6 +39,11 @@
 }
 
 /* Footer CSS*/
+
+#above_footer {
+	background-color: blue;
+}
+
 #footer {
 	padding-bottom: 15px;
 }
