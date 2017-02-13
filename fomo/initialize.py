@@ -23,6 +23,19 @@ g1.permissions.add(Permission.objects.get(codename='add_fomouser'))
 g1.permissions.add(Permission.objects.get(codename='change_fomouser'))
 g1.permissions.add(Permission.objects.get(codename='delete_fomouser'))
 
+g2 = Group()
+g2.name = 'Cashier'
+g2.save()
+g2.permissions.add(Permission.objects.get(codename='add_fomouser'))
+g2.permissions.add(Permission.objects.get(codename='change_fomouser'))
+
+g3 = Group()
+g3.name = 'Payroll Specialist'
+g3.save()
+g3.permissions.add(Permission.objects.get(codename='add_fomouser'))
+g3.permissions.add(Permission.objects.get(codename='change_fomouser'))
+g3.permissions.add(Permission.objects.get(codename='delete_fomouser'))
+
 # Create 4 users below with variables // Only run if the database has been cleared or the following users have been commented out
 
 user1 = amod.FomoUser()
@@ -93,21 +106,115 @@ user1.user_permissions.add(p) # gives user1 the permission to add users
 # for u in users:
 # 	print(u.last_name)
 
-# Cerate a category
+# Create a category
 cat1 = cmod.Category()
-cat1.codename = 'kids'
-cat1.name = 'Kids Toy Products'
+cat1.codename = 'br'
+cat1.name = 'Brass'
 cat1.save()
 
-# Create a Bulk Product
-p1 = cmod.BulkProduct()
-p1.name = 'Kazoo'
+# Create a category
+cat2 = cmod.Category()
+cat2.codename = 'wd'
+cat2.name = 'Wood Winds'
+cat2.save()
+
+# Create a category
+cat3 = cmod.Category()
+cat3.codename = 'pc'
+cat3.name = 'Percussion'
+cat3.save()
+
+# Create a category
+cat4 = cmod.Category()
+cat4.codename = 'ac'
+cat4.name = 'Accessories'
+cat4.save()
+
+# products = cmod.Product.objects.all()
+
+# Create a Unique Product
+p1 = cmod.UniqueProduct()
+p1.product = p1
+p1.serial_number = '1234asdf'
+p1.name = 'Violin'
 p1.category = cat1
-p1.price = Decimal('9.50')
-p1.quantity = 20
-p1.reorder_trigger = 5
-p1.reorder_quantity = 30
+p1.price = Decimal('250.99')
 p1.save()
+
+# Create a Unique Product
+p2 = cmod.UniqueProduct()
+p2.product = p2
+p2.serial_number = '3456asdf'
+p2.name = 'Clarinet'
+p2.category = cat2
+p2.price = Decimal('199.99')
+p2.save()
+
+# Create a Unique Product
+p3 = cmod.UniqueProduct()
+p3.product = p3
+p3.serial_number = '2345asdf'
+p3.name = 'Trumpet'
+p3.category = cat1
+p3.price = Decimal('250.99')
+p3.save()
+
+# Create a Bulk Product
+p4 = cmod.BulkProduct()
+p4.name = 'Sheet Music 1'
+p4.category = cat4
+p4.price = Decimal('9.50')
+p4.quantity = 20
+p4.reorder_trigger = 5
+p4.reorder_quantity = 30
+p4.save()
+
+# Create a Bulk Product
+p5 = cmod.BulkProduct()
+p5.name = 'Spare Part 1'
+p5.category = cat4
+p5.price = Decimal('12.50')
+p5.quantity = 12
+p5.reorder_trigger = 2
+p5.reorder_quantity = 10
+p5.save()
+
+# Create a Bulk Product
+p6 = cmod.BulkProduct()
+p6.name = 'Drum Sticks'
+p6.category = cat3
+p6.price = Decimal('5.50')
+p6.quantity = 30
+p6.reorder_trigger = 10
+p6.reorder_quantity = 30
+p6.save()
+
+# Create a Rental Product
+p7 = cmod.RentalProduct()
+p7.product = p7
+p7.serial_number = '1357asdf'
+p7.name = 'Trumpet'
+p7.category = cat1
+p7.price = Decimal('12.99')
+p7.save()
+
+# Create a Rental Product
+p8 = cmod.RentalProduct()
+p8.product = p8
+p8.serial_number = '2468asdf'
+p8.name = 'Tuba'
+p8.category = cat1
+p8.price = Decimal('16.99')
+p8.save()
+
+# Create a Rental Product
+p9 = cmod.RentalProduct()
+p9.product = p9
+p9.serial_number = '9876asdf'
+p9.name = 'Trombone'
+p9.category = cat1
+p9.price = Decimal('11.99')
+p9.save()
 
 
 
