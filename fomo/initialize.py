@@ -132,7 +132,7 @@ cat4.save()
 
 # Create a category
 cat5 = cmod.Category()
-c5.codename = 'st'
+cat5.codename = 'st'
 cat5.name = 'Strings'
 cat5.save()
 
