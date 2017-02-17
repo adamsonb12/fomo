@@ -130,6 +130,12 @@ cat4.codename = 'ac'
 cat4.name = 'Accessories'
 cat4.save()
 
+# Create a category
+cat5 = cmod.Category()
+c5.codename = 'st'
+cat5.name = 'Strings'
+cat5.save()
+
 # products = cmod.Product.objects.all()
 
 # Create a Unique Product
@@ -137,7 +143,7 @@ p1 = cmod.UniqueProduct()
 p1.product = p1
 p1.serial_number = '1234asdf'
 p1.name = 'Violin'
-p1.category = cat1
+p1.category = cat5
 p1.price = Decimal('250.99')
 p1.save()
 
