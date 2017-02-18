@@ -102,6 +102,18 @@ img {
 #other {
 }
 
+.glyphicon {
+  cursor: pointer;
+}
+
+.white_background {
+  color: #6a6a6a;
+}
+
+.white_link {
+  color: #40817c;
+}
+
 /* CSS for the Head intro to the homepage with the image and title plus a call to action*/
 
 header .container {
