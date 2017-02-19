@@ -1,21 +1,37 @@
-<%inherit file="app_base.html" />
+<%inherit file="app_base.htm" />
 
 <%block name="header_message"></%block>
 
 <%block name="alert_block"></%block>
 
  <%block name="content_catalog">
-  
-  	<table> 
-  		<tr>
-	  		<th> Category </th>
-	  		<th> Name </th>
-	  		<th> Price </th>
-	  		<th> Quantity </th>
-		</tr>
-		<!-- % for p in products:
-			${ p.name }
-		% endfor -->
-	</table>
+
+ <div class="container">
+
+	 <h1> Inventory </h1>
+	  
+	  	<table class="table table-striped"> 
+	  		<tr>
+		  		<th> Category </th>
+		  		<th> Name </th>
+		  		<th> Price </th>
+		  		<th> Quantity </th>
+		  		<th> Actions</th>
+			</tr>
+			
+			% for p in products:
+				<tr>
+					<td> ${ p.category.name } </td>
+					<td> ${ p.name } </td>
+					<td> ${ p.price } </td>
+					<td> ${ p.quantity if hasattr(p, 'quantity') else '-' } </td>
+					<td> 
+						<a href="/manager/product/${ p.id }/">Edit</a>
+					</td>
+				</tr>
+			% endfor
+		</table>
+
+	</div>
 
 </%block>	

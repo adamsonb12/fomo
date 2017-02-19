@@ -9,6 +9,7 @@
 .head_info {
   padding-top: 50px;
   padding-bottom: 50px;
+  color: #6a6a6a;
 }
 
 @media (min-width: 1010px) {
@@ -55,6 +56,7 @@
 
 .icon {
   font-size: 32px;
+  color: #6a6a6a;
 }
 
 /* Sections Info */
@@ -85,6 +87,7 @@ img {
 
 #buy {
   background-color: #413D3D;
+  color: #d7d7d7;
 }
 
 #buy_info {
@@ -97,9 +100,22 @@ img {
 
 #lessons {
   background-color: #413D3D;
+  color: #d7d7d7;
 }
 
 #other {
+}
+
+.glyphicon {
+  cursor: pointer;
+}
+
+.white_background {
+  color: #6a6a6a;
+}
+
+.white_link {
+  color: #40817c;
 }
 
 /* CSS for the Head intro to the homepage with the image and title plus a call to action*/

@@ -46,6 +46,7 @@
 
 #footer {
 	padding-bottom: 15px;
+	color: #6a6a6a;
 }
 
 .footer-brand {
@@ -60,6 +61,7 @@
 
 .footer-links a {
 	padding: 0 5px 0 5px;
+	color: #40817c;
 }
 
 .footer-copyright {
