@@ -16,7 +16,7 @@
 		  		<th> Name </th>
 		  		<th> Price </th>
 		  		<th> Quantity </th>
-		  		<th> Action</th>
+		  		<th> Actions</th>
 			</tr>
 			
 			% for p in products:
@@ -26,7 +26,7 @@
 					<td> ${ p.price } </td>
 					<td> ${ p.quantity if hasattr(p, 'quantity') else '-' } </td>
 					<td> 
-						<a href="manager/product?pid=${ p.id }">Edit</a>
+						<a href="/manager/product/${ p.id }/">Edit</a>
 					</td>
 				</tr>
 			% endfor
