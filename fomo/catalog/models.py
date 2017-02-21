@@ -35,6 +35,9 @@ class Category(models.Model):
 	codename = models.TextField(blank=True, null=True)
 	name = models.TextField(blank=True, null=True)
 
+	def __str__(self):
+		return self.codename + ': ' + self.name
+
 
 class Product(PolymorphicModel):
 	# id
