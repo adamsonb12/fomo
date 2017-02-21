@@ -27,10 +27,16 @@
 					<td> ${ p.quantity if hasattr(p, 'quantity') else '-' } </td>
 					<td> 
 						<a href="/manager/product/${ p.id }/">Edit</a>
+						|
+						<a href="/manager/product.delete/${ p.id }/">Delete</a>
 					</td>
 				</tr>
 			% endfor
 		</table>
+
+		<a href="/manager/create/">
+			<button class="btn btn-success">Create Product</button>
+		</a>
 
 	</div>
 

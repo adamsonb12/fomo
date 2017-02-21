@@ -10,13 +10,13 @@ from django import forms
 @view_function
 def process_request(request):
 
-	try: 
-		product = cmod.Product.objects.get(id=request.urlparams[0])
-	except cmod.Product.DoesNotExist:
-		return HttpResponseRedirect('/manager/products/')
+	# try: 
+	# 	product = cmod.Product.objects.get(id=request.urlparams[0])
+	# except cmod.Product.DoesNotExist:
+	# 	return HttpResponseRedirect('/manager/products/')
 
 	# process the form
-	form = ProductEditForm(request, product=product, initial={
+	form = ProductCreateForm(request, product=product, initial={
 		'name': product.name,
 		'category': product.category,
 		'price': product.price,
@@ -33,7 +33,7 @@ def process_request(request):
 	return dmp_render(request, 'product.html', context)
 
 
-class ProductEditForm(FormMixIn, forms.Form):
+class ProductCreateForm(FormMixIn, forms.Form):
 	
 	def init(self, product):
 	    self.fields['name'] = forms.CharField(label='Product Name', max_length=100)
@@ -49,35 +49,6 @@ class ProductEditForm(FormMixIn, forms.Form):
 		if hasattr(product, 'quantity'):
 			product.price = self.cleaned_data.get('quantity')
 		product.save()
-
-
-#######################################################################
-
-## Delete a Product
-
-@view_function
-def delete(request):
-
-	try: 
-		product = cmod.Product.objects.get(id=request.urlparams[0])
-	except cmod.Product.DoesNotExist:
-		return HttpResponseRedirect('/manager/products/')
-
-	product.delete()
-	return HttpResponseRedirect('/manager/products/')
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
