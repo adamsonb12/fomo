@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="${ STATIC_URL }homepage/media/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="${ STATIC_URL }homepage/media/bootstrap/css/bootstrap-theme.min.css" />
 
+    <!-- JQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
     ## render the css with the same name as this page
     ${ get_template_css(self, request, context) }
 
@@ -159,7 +162,6 @@
     ## render the JS with the same name as this page
     ${ get_template_js(self, request, context) }
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="${ STATIC_URL }homepage/media/js/bootstrap.min.js"></script>
 

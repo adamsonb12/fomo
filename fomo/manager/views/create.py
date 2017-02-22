@@ -16,38 +16,30 @@ def process_request(request):
 	# 	return HttpResponseRedirect('/manager/products/')
 
 	# process the form
-	form = ProductCreateForm(request, product=product, initial={
-		'name': product.name,
-		'category': product.category,
-		'price': product.price,
-		'quantity': getattr(product, 'quantity', 0),
-		})
+	form = ProductCreateForm(request)
 	if form.is_valid():
-	    form.commit(product)
+	    form.commit()
 	    return HttpResponseRedirect('/manager/products/')
 
 	context = {
-	    'product': product,
 	    'form': form,
 	}
-	return dmp_render(request, 'product.html', context)
+	return dmp_render(request, 'create.html', context)
 
 
 class ProductCreateForm(FormMixIn, forms.Form):
 	
 	def init(self, product):
-	    self.fields['name'] = forms.CharField(label='Product Name', max_length=100)
-	    self.fields['category'] = forms.ModelChoiceField(label='Category', queryset=cmod.Category.objects.order_by('name').all())
-	    self.fields['price'] = forms.DecimalField(label='Price')
-	    if hasattr(product, 'quantity'):
-	    	self.fields['quantity'] = forms.DecimalField(label='Quantity')
+		self.fields['name'] = forms.CharField(label='Product Name', max_length=100)
+		self.fields['category'] = forms.ModelChoiceField(label='Category', queryset=cmod.Category.objects.order_by('name').all())
+		self.fields['price'] = forms.DecimalField(label='Price')
+		self.fields['quantity'] = forms.DecimalField(label='Quantity')
 
 	def commit(self, product):
 		product.name = self.cleaned_data.get('name')
 		product.name = self.cleaned_data.get('name')
 		product.price = self.cleaned_data.get('price')
-		if hasattr(product, 'quantity'):
-			product.price = self.cleaned_data.get('quantity')
+		product.price = self.cleaned_data.get('quantity')
 		product.save()
 
 
