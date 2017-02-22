@@ -44,10 +44,10 @@ class ProductEditForm(FormMixIn, forms.Form):
 
 	def commit(self, product):
 		product.name = self.cleaned_data.get('name')
-		product.name = self.cleaned_data.get('name')
+		product.category = self.cleaned_data.get('category')
 		product.price = self.cleaned_data.get('price')
 		if hasattr(product, 'quantity'):
-			product.price = self.cleaned_data.get('quantity')
+			product.quantity = self.cleaned_data.get('quantity')
 		product.save()
 
 

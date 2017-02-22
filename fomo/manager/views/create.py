@@ -37,15 +37,31 @@ class ProductCreateForm(FormMixIn, forms.Form):
 			['rental', 'Rental Product'],
 			])
 		self.fields['category'] = forms.ModelChoiceField(label='Category', queryset=cmod.Category.objects.order_by('name').all())
+		self.fields['serial'] = forms.CharField(label='Serial Number', max_length=100, widget=forms.TextInput(attrs={'class':'producttype-unique'}), required=False)
 		self.fields['price'] = forms.DecimalField(label='Price')
-		self.fields['quantity'] = forms.DecimalField(label='Quantity', widget=forms.TextInput(attrs={'class':'producttype-bulk'}))
+		self.fields['quantity'] = forms.IntegerField(label='Quantity', widget=forms.TextInput(attrs={'class':'producttype-bulk'}), required=False)
+		self.fields['reorder-trigger'] = forms.IntegerField(label='Reorder Trigger Amount', widget=forms.TextInput(attrs={'class':'producttype-bulk'}), required=False)
+		self.fields['reorder-quantity'] = forms.IntegerField(label='Amount to Reorder', widget=forms.TextInput(attrs={'class':'producttype-bulk'}), required=False)
 
-	def commit(self, product):
+	def commit(self):
+
+		if (self.cleaned_data.get('producttype') ==  'unique'):
+			product = cmod.UniqueProduct()
+			product.serial_number = self.cleaned_data.get('serial')
+		elif (self.cleaned_data.get('producttype') ==  'bulk'):
+			product = cmod.BulkProduct()
+			product.quantity = self.cleaned_data.get('quantity')
+			product.reorder_trigger = self.cleaned_data.get('reorder-trigger')
+			product.reorder_quantity = self.cleaned_data.get('reorder-quantity')
+		else:
+			product = cmod.RentalProduct()
+			product.serial_number = self.cleaned_data.get('serial')
+
 		product.name = self.cleaned_data.get('name')
-		product.name = self.cleaned_data.get('name')
+		product.category = self.cleaned_data.get('category')
 		product.price = self.cleaned_data.get('price')
-		product.price = self.cleaned_data.get('quantity')
 		product.save()
+		return 4
 
 
 
