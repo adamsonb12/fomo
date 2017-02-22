@@ -31,9 +31,14 @@ class ProductCreateForm(FormMixIn, forms.Form):
 	
 	def init(self, product):
 		self.fields['name'] = forms.CharField(label='Product Name', max_length=100)
+		self.fields['producttype'] = forms.ChoiceField(label='Product Type', choices=[
+			['bulk', 'Bulk Product'],
+			['unique', 'Unique Product'],
+			['rental', 'Rental Product'],
+			])
 		self.fields['category'] = forms.ModelChoiceField(label='Category', queryset=cmod.Category.objects.order_by('name').all())
 		self.fields['price'] = forms.DecimalField(label='Price')
-		self.fields['quantity'] = forms.DecimalField(label='Quantity')
+		self.fields['quantity'] = forms.DecimalField(label='Quantity', widget=forms.TextInput(attrs={'class':'producttype-bulk'}))
 
 	def commit(self, product):
 		product.name = self.cleaned_data.get('name')

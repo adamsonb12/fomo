@@ -27,13 +27,13 @@ $(function() {
 	contacttype.change(function() {
 		var value = contacttype.val();
 		if(value == 'phone') {
-			$('.contacttype-phone').closest('p').show();
-			$('.contacttype-email').closest('p').hide();
+			$('.contacttype-phone').closest('p').show(1000);
+			$('.contacttype-email').closest('p').hide(1000);
 		}
 		else
 		{
-			$('.contacttype-phone').closest('p').hide();
-			$('.contacttype-email').closest('p').show();
+			$('.contacttype-phone').closest('p').hide(1000);
+			$('.contacttype-email').closest('p').show(1000);
 		}
 	});
 	contacttype.change();
