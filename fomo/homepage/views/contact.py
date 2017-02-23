@@ -37,13 +37,13 @@ class ContactForm(FormMixIn, forms.Form):
 
 	def init(self):
 		self.fields['name'] = forms.CharField(label='Full Name', max_length=100)
-		self.fields['contactType'] = forms.ChoiceField(label='How should we contact you?', choices=[
+		self.fields['contacttype'] = forms.ChoiceField(label='How should we contact you?', choices=[
 			['phone', 'Phone Number'],
 			['email', 'Email'],
-			], widget=forms.RadioSelect())
-		self.fields['phone'] = forms.CharField(label='Phone Number', max_length=100)
-		self.fields['cell'] = forms.CharField(label='Cell Phone', max_length=100)
-		self.fields['email'] = forms.EmailField(label='Email', max_length=100)
+			])
+		self.fields['phone'] = forms.CharField(label='Phone Number', max_length=100, widget=forms.TextInput(attrs={'class':'contacttype-phone'}))
+		self.fields['cell'] = forms.CharField(label='Cell Phone', max_length=100, widget=forms.TextInput(attrs={'class':'contacttype-phone'}))
+		self.fields['email'] = forms.EmailField(label='Email', max_length=100, widget=forms.TextInput(attrs={'class':'contacttype-email'}))
 		self.fields['subject'] = forms.CharField(label='Subject', max_length=100)
 		self.fields['message'] = forms.CharField(label='Message', max_length=1000)
 

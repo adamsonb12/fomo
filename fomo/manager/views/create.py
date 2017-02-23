@@ -16,39 +16,52 @@ def process_request(request):
 	# 	return HttpResponseRedirect('/manager/products/')
 
 	# process the form
-	form = ProductCreateForm(request, product=product, initial={
-		'name': product.name,
-		'category': product.category,
-		'price': product.price,
-		'quantity': getattr(product, 'quantity', 0),
-		})
+	form = ProductCreateForm(request)
 	if form.is_valid():
-	    form.commit(product)
+	    form.commit()
 	    return HttpResponseRedirect('/manager/products/')
 
 	context = {
-	    'product': product,
 	    'form': form,
 	}
-	return dmp_render(request, 'product.html', context)
+	return dmp_render(request, 'create.html', context)
 
 
 class ProductCreateForm(FormMixIn, forms.Form):
 	
 	def init(self, product):
-	    self.fields['name'] = forms.CharField(label='Product Name', max_length=100)
-	    self.fields['category'] = forms.ModelChoiceField(label='Category', queryset=cmod.Category.objects.order_by('name').all())
-	    self.fields['price'] = forms.DecimalField(label='Price')
-	    if hasattr(product, 'quantity'):
-	    	self.fields['quantity'] = forms.DecimalField(label='Quantity')
+		self.fields['name'] = forms.CharField(label='Product Name', max_length=100)
+		self.fields['producttype'] = forms.ChoiceField(label='Product Type', choices=[
+			['bulk', 'Bulk Product'],
+			['unique', 'Unique Product'],
+			['rental', 'Rental Product'],
+			])
+		self.fields['category'] = forms.ModelChoiceField(label='Category', queryset=cmod.Category.objects.order_by('name').all())
+		self.fields['serial'] = forms.CharField(label='Serial Number', max_length=100, widget=forms.TextInput(attrs={'class':'producttype-unique'}), required=False)
+		self.fields['price'] = forms.DecimalField(label='Price')
+		self.fields['quantity'] = forms.IntegerField(label='Quantity', widget=forms.TextInput(attrs={'class':'producttype-bulk'}), required=False)
+		self.fields['reorder-trigger'] = forms.IntegerField(label='Reorder Trigger Amount', widget=forms.TextInput(attrs={'class':'producttype-bulk'}), required=False)
+		self.fields['reorder-quantity'] = forms.IntegerField(label='Amount to Reorder', widget=forms.TextInput(attrs={'class':'producttype-bulk'}), required=False)
 
-	def commit(self, product):
+	def commit(self):
+
+		if (self.cleaned_data.get('producttype') ==  'unique'):
+			product = cmod.UniqueProduct()
+			product.serial_number = self.cleaned_data.get('serial')
+		elif (self.cleaned_data.get('producttype') ==  'bulk'):
+			product = cmod.BulkProduct()
+			product.quantity = self.cleaned_data.get('quantity')
+			product.reorder_trigger = self.cleaned_data.get('reorder-trigger')
+			product.reorder_quantity = self.cleaned_data.get('reorder-quantity')
+		else:
+			product = cmod.RentalProduct()
+			product.serial_number = self.cleaned_data.get('serial')
+
 		product.name = self.cleaned_data.get('name')
-		product.name = self.cleaned_data.get('name')
+		product.category = self.cleaned_data.get('category')
 		product.price = self.cleaned_data.get('price')
-		if hasattr(product, 'quantity'):
-			product.price = self.cleaned_data.get('quantity')
 		product.save()
+		return 4
 
 
 

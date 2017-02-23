@@ -22,21 +22,20 @@ $(doSomething);*/
 });*/
 
 $(function() {
-	var contactType = $(id_contactType);
+	var contacttype = $(id_contacttype);
 
-	contactType.change(function() {
-		var value = contactType.val();
+	contacttype.change(function() {
+		var value = contacttype.val();
 		if(value == 'phone') {
-			$('#id_phone').closest('p').show();
-			$('#id_cellnumber').closest('p').show();
-			$('#id_email').closest('p').hide();
+			$('.contacttype-phone').closest('p').show(1000);
+			$('.contacttype-email').closest('p').hide(1000);
 		}
 		else
 		{
-			$('#id_phone').closest('p').hide();
-			$('#id_cellnumber').closest('p').hide();
-			$('#id_email').closest('p').show();
+			$('.contacttype-phone').closest('p').hide(1000);
+			$('.contacttype-email').closest('p').show(1000);
 		}
-	})
+	});
+	contacttype.change();
 
 });
