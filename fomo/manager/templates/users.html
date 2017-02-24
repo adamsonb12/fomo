@@ -1,0 +1,54 @@
+<%inherit file="app_base.htm" />
+
+<%block name="header_message"></%block>
+
+<%block name="alert_block"></%block>
+
+ <%block name="content_catalog">
+
+ <div class="container">
+
+	 <h1> Users </h1>
+
+<!-- 	  username
+    first_name
+    last_name
+    email
+    birth_date 
+    gender -->
+	  
+	  	<table class="table table-striped"> 
+	  		<tr>
+		  		<th> Last Name </th>
+		  		<th> First Name </th>
+		  		<th> Username </th>
+		  		<th> Email </th>
+		  		<th> Birth Date </th>
+		  		<th> Gender </th>
+		  		<th> Actions </th>
+			</tr>
+			
+			% for u in users:
+				<tr>
+					<td> ${ u.last_name } </td>
+					<td> ${ u.first_name } </td>
+					<td> ${ u.username } </td>
+					<td> ${ u.email } </td>
+					<td> ${ u.birth_date } </td>
+					<td> ${ u.gender } </td>
+					<td> 
+						<a href="/manager/user/${ u.username }/">Edit</a>
+						|
+						<a class="delete-btn" href="/manager/user.delete/${ u.username }/">Delete</a>
+					</td>
+				</tr>
+			% endfor
+		</table>
+
+		<a href="/manager/create_user/">
+			<button class="btn btn-success">Create Product</button>
+		</a>
+
+	</div>
+
+</%block>
