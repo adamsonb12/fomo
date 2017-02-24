@@ -16,3 +16,15 @@ def process_request(request):
 		'products': products, 
 	}
 	return dmp_render(request, 'products.html', context)
+
+
+@view_function
+def get_quantity(request):
+	# gets the current quantity of product id in urlparams[0]
+
+	try: 
+		product = cmod.BulkProduct.objects.get(id=request.urlparams[0])
+	except cmod.BulkProduct.DoesNotExist:
+		return HttpResponseRedirect('/manager/products/')
+
+	return HttpResponse(product.quantity)
