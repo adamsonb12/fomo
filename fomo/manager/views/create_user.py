@@ -4,10 +4,15 @@ from django_mako_plus import view_function
 from datetime import datetime
 from account import models as amod
 from .. import dmp_render, dmp_render_to_string
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
+
 from formlib.form import FormMixIn
 from django import forms
 
 @view_function
+@login_required()
+@permission_required('add_fomouser')
 def process_request(request):
 
 	# process the form
