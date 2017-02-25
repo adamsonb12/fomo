@@ -1,0 +1,73 @@
+<%inherit file="app_base.htm" />
+
+<%block name="header_message"></%block>
+
+<%block name="alert_block"></%block>
+
+ <%block name="content_catalog">
+
+ <div class="container">
+
+	 <h1> Users </h1>
+
+<!-- 	  username
+    first_name
+    last_name
+    email
+    birth_date 
+    gender -->
+	  
+	  	<table class="table table-striped"> 
+	  		<tr>
+		  		<th> Last Name </th>
+		  		<th> First Name </th>
+		  		<th> Username </th>
+		  		<th> Email </th>
+		  		<th> Birth Date </th>
+		  		<th> Gender </th>
+		  		<th> Actions </th>
+			</tr>
+			
+			% for u in users:
+				<tr>
+					<td> ${ u.last_name } </td>
+					<td> ${ u.first_name } </td>
+					<td> ${ u.username } </td>
+					<td> ${ u.email } </td>
+					<td> ${ u.birth_date } </td>
+					<td> ${ u.gender } </td>
+					<td> 
+						<a href="/manager/user/${ u.id }/">Edit</a>
+						|
+						<a class="delete-btn" href="/manager/user.delete/${ u.id }/">Delete</a>
+					</td>
+				</tr>
+			% endfor
+		</table>
+
+		<a href="/manager/create_user/">
+			<button class="btn btn-success">Create User</button>
+		</a>
+
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Delete User</h4>
+	      </div>
+	      <div class="modal-body">
+	        Are you sure you want to delete this user?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	        <a href="" id="delete-confirm" class="btn btn-danger">Confirm</a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+</%block>
