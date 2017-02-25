@@ -37,9 +37,9 @@
 					<td> ${ u.birth_date } </td>
 					<td> ${ u.gender } </td>
 					<td> 
-						<a href="/manager/user/${ u.username }/">Edit</a>
+						<a href="/manager/user/${ u.id }/">Edit</a>
 						|
-						<a class="delete-btn" href="/manager/user.delete/${ u.username }/">Delete</a>
+						<a class="delete-btn" href="/manager/user.delete/${ u.id }/">Delete</a>
 					</td>
 				</tr>
 			% endfor
