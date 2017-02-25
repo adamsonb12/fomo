@@ -38,22 +38,26 @@ class UserCreateForm(FormMixIn, forms.Form):
 
 	def commit(self):
 
-		# if ():## see if the username has already been used
+		## see if the new username is uniqu
+		un = self.cleaned_data.get('username')
+		users = amod.FomoUser.objects.filter(username=un)
 
-		# else:
-			## display an error message about changing their username
+		if len(users) > 0:
+			raise forms.ValidationError(
+				"That username has already been taken, please choose a different one")
+		else:
 
-		user = amod.FomoUser()
+			user = amod.FomoUser()
 
-		user.first_name = self.cleaned_data.get('first_name')
-		user.last_name = self.cleaned_data.get('last_name')
-		user.username = self.cleaned_data.get('username')
-		user.email = self.cleaned_data.get('email')
-		user.birth_date = self.cleaned_data.get('birth_date')
-		user.gender = self.cleaned_data.get('gender')
-		
-		user.save()
-		return 4
+			user.first_name = self.cleaned_data.get('first_name')
+			user.last_name = self.cleaned_data.get('last_name')
+			user.username = self.cleaned_data.get('username')
+			user.email = self.cleaned_data.get('email')
+			user.birth_date = self.cleaned_data.get('birth_date')
+			user.gender = self.cleaned_data.get('gender')
+			
+			user.save()
+			return 4
 
 
 

@@ -50,14 +50,23 @@ class UserEditForm(FormMixIn, forms.Form):
 			])
 
 	def commit(self, user):
-		user.first_name = self.cleaned_data.get('first_name')
-		user.last_name = self.cleaned_data.get('last_name')
-		## Logic here to make sure that the username isn't already taken
-		user.username = self.cleaned_data.get('username')
-		user.email = self.cleaned_data.get('email')
-		user.birth_date = self.cleaned_data.get('birth_date')
-		user.gender = self.cleaned_data.get('gender')
-		user.save()
+
+		## see if the new username is uniqu
+		un = self.cleaned_data.get('username')
+		users = amod.FomoUser.objects.filter(username=un).exclude(id=user.id )
+
+		if len(users) > 0:
+			raise forms.ValidationError(
+				"That username has already been taken, please choose a different one")
+		else:
+
+			user.first_name = self.cleaned_data.get('first_name')
+			user.last_name = self.cleaned_data.get('last_name')
+			user.username = self.cleaned_data.get('username')
+			user.email = self.cleaned_data.get('email')
+			user.birth_date = self.cleaned_data.get('birth_date')
+			user.gender = self.cleaned_data.get('gender')
+			user.save()
 
 
 #######################################################################
