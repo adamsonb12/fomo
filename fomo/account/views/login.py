@@ -2,11 +2,12 @@ from django.conf import settings
 from django.http import HttpResponse, HttpResponseRedirect
 from django_mako_plus import view_function
 from django.contrib.auth import authenticate, login
-from datetime import datetime
-from account import models as amod
 from .. import dmp_render, dmp_render_to_string
-from formlib.form import FormMixIn
 from django import forms
+
+from formlib.form import FormMixIn
+from account import models as amod
+
 
 @view_function
 def process_request(request):
@@ -14,31 +15,29 @@ def process_request(request):
     # process the form
 	form = LoginForm(request)
 	if form.is_valid():
-	    form.commit()
-	    return HttpResponseRedirect('/manager/users/')
+	    form.commit(request)
+	    return HttpResponseRedirect('/')
 
-	context = {
-	    'form': form,
-	}
-	return dmp_render(request, 'login.html', context)
+	return dmp_render(request, 'login.html', {
+		'form': form,
+		})
 
 class LoginForm(FormMixIn, forms.Form):
 	
 	def init(self):
-	    self.fields['username'] = forms.CharField(label='Username', max_length=100)
-	    self.fields['password'] = forms.CharField(label='Password', max_length=100)
+	    self.fields['username'] = forms.CharField(required=True)
+	    self.fields['password'] = forms.CharField(required=True, widget=forms.PasswordInput())
 
-	def commit(self):
+	def clean(self):
+		self.user = authenticate(username=self.cleaned_data.get('username'), password=self.cleaned_data.get('password'))
+		if self.user is None:
+			raise forms.ValidationError('Invalid username or password')
+		return self.cleaned_data
 
-		un = self.cleaned_data.get('username')
-		ps = self.cleaned_data.get('password')
+	def commit(self, request):
+		login(request, self.user)
+		return 4
 
-		user = authenticate(username=un, password=ps)
-		if user is not None:
-			login(request, user)
-			return HttpResponseRedirect('/manager/users')
-		else:
-			return HttpResponseRedirect('/')
 
 
 
