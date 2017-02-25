@@ -62,15 +62,19 @@ class UserEditForm(FormMixIn, forms.Form):
 
 #######################################################################
 
-## Delete a Product
+## Delete a User
 
-# @view_function
-# def delete(request):
+@view_function
+def delete(request):
 
-# 	try: 
-# 		product = cmod.Product.objects.get(id=request.urlparams[0])
-# 	except cmod.Product.DoesNotExist:
-# 		return HttpResponseRedirect('/manager/products/')
+	try: 
+		user = amod.FomoUser.objects.get(id=request.urlparams[0])
+	except amod.FomoUser.DoesNotExist:
+		return HttpResponseRedirect('/manager/users/')
 
-# 	product.delete()
-# 	return HttpResponseRedirect('/manager/products/')
+	user.delete()
+	return HttpResponseRedirect('/manager/users/')
+
+
+
+
