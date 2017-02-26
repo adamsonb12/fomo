@@ -16,7 +16,7 @@ def process_request(request):
 	form = LoginForm(request)
 	if form.is_valid():
 	    form.commit(request)
-	    return HttpResponseRedirect('/')
+	    return HttpResponseRedirect('/account/account_info/')
 
 	return dmp_render(request, 'login.html', {
 		'form': form,

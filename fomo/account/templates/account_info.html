@@ -1,0 +1,22 @@
+
+
+<%inherit file="app_base.htm" />
+
+<%block name="header_message">
+</%block>
+
+<%block name="alert_block"></%block>
+
+<%block name="content_catalog">
+      <div id="content-catalog" class="container">
+        
+      	<h1> ${ user.first_name }'s Account Information </h1>
+
+      	<a href="/account/account_edit/${ user.id }/">Edit Account Information</a>
+
+      	<span></span>
+
+      	<a href="/account/password/${ user.id }/">Change Password</a>
+
+      </div>
+</%block>
