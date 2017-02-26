@@ -18,10 +18,10 @@ def process_request(request):
 	try: 
 		user = amod.FomoUser.objects.get(id=request.urlparams[0])
 	except amod.FomoUser.DoesNotExist:
-		return HttpResponseRedirect('/manager/users/')
+		return HttpResponseRedirect('/account/account_info/')
 
 	# process the form
-	form = UserEditForm(request, user=user, initial={
+	form = AccountEditForm(request, user=user, initial={
 		'first_name': user.first_name,
 		'last_name': user.last_name,
 		'username': user.username,
@@ -31,16 +31,16 @@ def process_request(request):
 		})
 	if form.is_valid():
 	    form.commit(user)
-	    return HttpResponseRedirect('/manager/users/')
+	    return HttpResponseRedirect('/account/account_info/')
 
 	context = {
 	    'user': user,
 	    'form': form,
 	}
-	return dmp_render(request, 'user.html', context)
+	return dmp_render(request, 'account_edit.html', context)
 
 
-class UserEditForm(FormMixIn, forms.Form):
+class AccountEditForm(FormMixIn, forms.Form):
 	
 	def init(self, user):
 	    self.fields['first_name'] = forms.CharField(label='First Name', max_length=100)
@@ -72,22 +72,6 @@ class UserEditForm(FormMixIn, forms.Form):
 			user.birth_date = self.cleaned_data.get('birth_date')
 			user.gender = self.cleaned_data.get('gender')
 			user.save()
-
-
-#######################################################################
-
-## Delete a User
-
-@view_function
-def delete(request):
-
-	try: 
-		user = amod.FomoUser.objects.get(id=request.urlparams[0])
-	except amod.FomoUser.DoesNotExist:
-		return HttpResponseRedirect('/manager/users/')
-
-	user.delete()
-	return HttpResponseRedirect('/manager/users/')
 
 
 
