@@ -17,24 +17,33 @@ from catalog import models as cmod #catalog models
 # Create our Groups
 
 g1 = Group()
-g1.name = 'Salespeople'
+g1.name = 'Customer'
 g1.save()
 g1.permissions.add(Permission.objects.get(codename='add_fomouser'))
 g1.permissions.add(Permission.objects.get(codename='change_fomouser'))
-g1.permissions.add(Permission.objects.get(codename='delete_fomouser'))
 
 g2 = Group()
-g2.name = 'Cashier'
+g2.name = 'Employee'
 g2.save()
 g2.permissions.add(Permission.objects.get(codename='add_fomouser'))
 g2.permissions.add(Permission.objects.get(codename='change_fomouser'))
+g2.permissions.add(Permission.objects.get(codename='change_bulkproduct'))
 
 g3 = Group()
-g3.name = 'Payroll Specialist'
+g3.name = 'Manager'
 g3.save()
 g3.permissions.add(Permission.objects.get(codename='add_fomouser'))
 g3.permissions.add(Permission.objects.get(codename='change_fomouser'))
 g3.permissions.add(Permission.objects.get(codename='delete_fomouser'))
+g3.permissions.add(Permission.objects.get(codename='add_uniqueproduct'))
+g3.permissions.add(Permission.objects.get(codename='change_uniqueproduct'))
+g3.permissions.add(Permission.objects.get(codename='delete_uniqueproduct'))
+g3.permissions.add(Permission.objects.get(codename='add_bulkproduct'))
+g3.permissions.add(Permission.objects.get(codename='delete_bulkproduct'))
+g3.permissions.add(Permission.objects.get(codename='change_bulkproduct'))
+g3.permissions.add(Permission.objects.get(codename='add_rentalproduct'))
+g3.permissions.add(Permission.objects.get(codename='change_rentalproduct'))
+g3.permissions.add(Permission.objects.get(codename='delete_rentalproduct'))
 
 # Create 4 users below with variables // Only run if the database has been cleared or the following users have been commented out
 
@@ -51,6 +60,8 @@ user1.is_staff = True
 user1.is_superuser = True
 user1.save()
 
+user1.groups.add(g3)
+
 user2 = amod.FomoUser()
 
 user2.set_password("password")
@@ -61,6 +72,8 @@ user2.email = "user2@byu.edu"
 user2.birth_date = datetime(1994,6,17)
 user2.gender = "other"
 user2.save()
+
+user2.groups.add(g2)
 
 user3 = amod.FomoUser()
 
@@ -73,6 +86,8 @@ user3.birth_date = datetime(1993,5,11)
 user3.gender = "male"
 user3.save()
 
+user3.groups.add(g3)
+
 user4 = amod.FomoUser()
 
 user4.set_password("password")
@@ -83,6 +98,8 @@ user4.email = "user4@byu.edu"
 user4.birth_date = datetime(1992,8,14)
 user4.gender = "female"
 user4.save()
+
+user4.groups.add(g1)
 
 p = Permission.objects.get(codename='add_fomouser')
 user1.user_permissions.add(p) # gives user1 the permission to add users
@@ -221,6 +238,10 @@ p9.name = 'Trombone'
 p9.category = cat1
 p9.price = Decimal('11.99')
 p9.save()
+
+
+# for p in Permission.objects.all():
+# 	print(p)
 
 
 

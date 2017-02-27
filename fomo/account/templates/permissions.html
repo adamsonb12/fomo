@@ -1,0 +1,35 @@
+<%inherit file="app_base.htm" />
+
+<%block name="header_message">
+</%block>
+
+<%block name="alert_block"></%block>
+
+<%block name="content_catalog">
+	<div class="container">
+		<h1> Permissions </h1>
+		<table class="table table-striped">
+			
+			<tr>
+				<th> <h4>Name </h4></th>
+				<th><h4> Codename </h4> </th>
+				<th> <h4>Actions</h4> </th>
+			</tr>
+
+			% for p in permissions:
+
+			<tr>
+				<th> ${ p.name } </th>
+				<th> ${ p.codename }</th>
+				<td> 
+					<a href="/">Edit</a>
+					|
+					<a class="delete-btn" href="/">Delete</a>
+				</td>
+			</tr>
+
+			% endfor 
+
+		</table> 
+	</div>
+</%block>

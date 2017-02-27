@@ -12,7 +12,7 @@ from django import forms
 
 @view_function
 @login_required()
-@permission_required('add_fomouser')
+@permission_required('change_fomouser')
 def process_request(request):
 
 	try: 
@@ -79,6 +79,7 @@ class UserEditForm(FormMixIn, forms.Form):
 ## Delete a User
 
 @view_function
+@permission_required('delete_fomouser')
 def delete(request):
 
 	try: 
