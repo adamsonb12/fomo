@@ -11,6 +11,8 @@ from formlib.form import FormMixIn
 from django import forms
 
 @view_function
+@login_required()
+@permission_required('change_fomouser')
 def process_request(request):
 
 	try: 

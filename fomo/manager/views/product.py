@@ -12,7 +12,7 @@ from django import forms
 
 @view_function
 @login_required()
-@permission_required('add_fomouser')
+@permission_required('change_bulkproduct')
 def process_request(request):
 
 	try: 
@@ -61,6 +61,9 @@ class ProductEditForm(FormMixIn, forms.Form):
 ## Delete a Product
 
 @view_function
+@permission_required('delete_bulkproduct')
+@permission_required('delete_uniqueproduct')
+@permission_required('delete_rentalproduct')
 def delete(request):
 
 	try: 

@@ -12,7 +12,9 @@ from django import forms
 
 @view_function
 @login_required()
-@permission_required('add_fomouser')
+@permission_required('add_uniqueproduct')
+@permission_required('add_bulkproduct')
+@permission_required('add_rentalproduct')
 def process_request(request):
 
 	# try: 

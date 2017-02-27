@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import permission_required
 
 @view_function
 @login_required()
-@permission_required('add_fomouser')
 def process_request(request):
 
 	# Query to display all products
