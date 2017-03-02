@@ -33,6 +33,7 @@
 					<td> ${ u.last_name } </td>
 					<td> ${ u.first_name } </td>
 					<td> ${ u.username } </td>
+					<td> ${ u.groups.values_list('name',flat=True).get() } </td>
 					<td> ${ u.email } </td>
 					<td> ${ u.birth_date } </td>
 					<td> ${ u.gender } </td>
@@ -40,6 +41,8 @@
 						<a href="/manager/user/${ u.id }/">Edit</a>
 						|
 						<a class="delete-btn" href="/manager/user.delete/${ u.id }/">Delete</a>
+						|
+						<a class="perm-btn" href="/manager/permissionlist/${ u.id }">View Permissions</a>
 					</td>
 				</tr>
 			% endfor

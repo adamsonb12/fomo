@@ -6,6 +6,7 @@ from account import models as amod
 from .. import dmp_render, dmp_render_to_string
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
+from django.contrib.auth.models import Permission, Group
 
 from formlib.form import FormMixIn
 from django import forms
@@ -19,6 +20,7 @@ def process_request(request):
 		user = amod.FomoUser.objects.get(id=request.urlparams[0])
 	except amod.FomoUser.DoesNotExist:
 		return HttpResponseRedirect('/manager/users/')
+
 
 	# process the form
 	form = UserEditForm(request, user=user, initial={
