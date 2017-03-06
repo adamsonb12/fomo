@@ -20,7 +20,8 @@ def process_request(request):
 		user = amod.FomoUser.objects.get(id=request.urlparams[0])
 	except amod.FomoUser.DoesNotExist:
 		return HttpResponseRedirect('/manager/users/')
-
+	# Query to display all products
+	permissions = Permission.objects.order_by('name').all()
 
 	# process the form
 	form = UserEditForm(request, user=user, initial={
@@ -38,6 +39,7 @@ def process_request(request):
 	context = {
 	    'user': user,
 	    'form': form,
+	    'permissions': permissions,
 	}
 	return dmp_render(request, 'user.html', context)
 

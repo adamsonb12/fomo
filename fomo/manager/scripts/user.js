@@ -5,5 +5,10 @@ $(function() {
 		format:'Y-m-d'
 	});
 
+	$('.list-group-item').click(function(event){
+		
+
+	});
+
 
 });

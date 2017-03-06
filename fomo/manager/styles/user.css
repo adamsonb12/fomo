@@ -1,0 +1,9 @@
+
+.list-group-item {
+	margin: -15px;
+	cursor: pointer;
+}
+
+#perms {
+	padding-top: 30px;
+}
