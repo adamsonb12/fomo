@@ -12,6 +12,22 @@
  	
  		${ form }
 
+ 		<div id="perms" class="col-md-6">
+
+	 		% for p in permissions:
+
+				<ul class="list-group">
+					<li class="list-group-item"> ${ p.name } </li>
+				</ul>
+
+			% endfor	
+
+		</div>
+
+		<div id="perms" class="col-md-6">
+			
+		</div>
+
 	</div> 
 
 </%block>
