@@ -62,6 +62,9 @@
 
               <!-- Collect the nav links, forms, and other content for toggling -->
               <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+              %if user.is_authenticated:
+
                 <ul class="nav navbar-nav">
 
                   <li class="${ 'active' if request.dmp_router_page == 'index' else ''}">
@@ -72,23 +75,49 @@
                     <a href="#">Shop</a>
                   </li>
 
-                  <li class="${ 'active' if request.dmp_router_page == 'about' else ''}">
-                    <a href="/homepage/about">About</a>
+                  <li class="${ 'active' if request.dmp_router_page == 'users' else ''}">
+                    <a href="/manager/users">Users</a>
                   </li>
 
-                  <li class="${ 'active' if request.dmp_router_page == 'contact' else ''}">
-                    <a href="/homepage/contact">Contact</a>
+                  <li class="${ 'active' if request.dmp_router_page == 'products' else ''}">
+                    <a href="/manager/products">Products</a>
                   </li>
 
-                  <li class="${ 'active' if request.dmp_router_page == 'sections' else ''}">
-                    <a href="/homepage/sections">Sections</a>
-                  </li>
-
-                  <li class="${ 'active' if request.dmp_router_page == 'faqs' else ''}">
-                    <a href="/homepage/faqs">FAQs</a>
+                  <li class="${ 'active' if request.dmp_router_page == 'account_info' else ''}">
+                    <a href="/account/account_info">Account</a>
                   </li>
 
                 </ul>
+                    
+                    %else:
+                        <ul class="nav navbar-nav">
+
+                          <li class="${ 'active' if request.dmp_router_page == 'index' else ''}">
+                            <a href="/homepage/index">Home</a>
+                          </li>
+
+                          <li class="${ 'active' if request.dmp_router_page == 'catalog' else ''}">
+                            <a href="#">Shop</a>
+                          </li>
+
+                          <li class="${ 'active' if request.dmp_router_page == 'about' else ''}">
+                            <a href="/homepage/about">About</a>
+                          </li>
+
+                          <li class="${ 'active' if request.dmp_router_page == 'contact' else ''}">
+                            <a href="/homepage/contact">Contact</a>
+                          </li>
+
+                          <li class="${ 'active' if request.dmp_router_page == 'sections' else ''}">
+                            <a href="/homepage/sections">Sections</a>
+                          </li>
+
+                          <li class="${ 'active' if request.dmp_router_page == 'faqs' else ''}">
+                            <a href="/homepage/faqs">FAQs</a>
+                          </li>
+
+                        </ul>
+                    %endif
 
                 <ul class="nav navbar-nav navbar-right">
                   
@@ -119,14 +148,16 @@
 
     <%block name="content_catalog">
       <div id="content-catalog" class="container-fluid">
-        <div id="left_column" class="col-md-2 col-xs-12"> <!-- Left Column -->
-          
-        </div>
-        <div id="middle_content" class="col-md-8 col-xs-12"> <!-- Middle Section -->
-          
-        </div>
-        <div id="right_column" class="col-md-2 col-xs-12"> <!-- Right Column -->
-          
+        <div class="row">
+          <div id="left_column" class="col-md-2"> <!-- Left Column -->
+            <%block name="left_column"> </%block>         
+          </div>
+          <div id="middle_content" class="col-md-8"> <!-- Middle Section -->
+            <%block name="middle_column"> </%block>
+          </div>
+          <div id="right_column" class="col-md-2"> <!-- Right Column -->
+            <%block name="right_column"> </%block>
+          </div>
         </div>
       </div>
     </%block>
