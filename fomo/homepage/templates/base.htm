@@ -148,14 +148,16 @@
 
     <%block name="content_catalog">
       <div id="content-catalog" class="container-fluid">
-        <div id="left_column" class="col-md-2 col-xs-12"> <!-- Left Column -->
-          
-        </div>
-        <div id="middle_content" class="col-md-8 col-xs-12"> <!-- Middle Section -->
-          
-        </div>
-        <div id="right_column" class="col-md-2 col-xs-12"> <!-- Right Column -->
-          
+        <div class="row">
+          <div id="left_column" class="col-md-2"> <!-- Left Column -->
+            <%block name="left_column"> </%block>         
+          </div>
+          <div id="middle_content" class="col-md-8"> <!-- Middle Section -->
+            <%block name="middle_column"> </%block>
+          </div>
+          <div id="right_column" class="col-md-2"> <!-- Right Column -->
+            <%block name="right_column"> </%block>
+          </div>
         </div>
       </div>
     </%block>

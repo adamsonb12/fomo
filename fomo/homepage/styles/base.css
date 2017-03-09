@@ -27,15 +27,15 @@
 /* Catalog CSS */
 
 #left_column {
-	background-color: blue;
+    list-style: none;
 }
 
 #middle_content {
-	background-color: green;
+	
 }
 
 #right_column {
-	background-color: yellow;
+	list-style: none;
 }
 
 /* Footer CSS*/

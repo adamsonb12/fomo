@@ -7,16 +7,18 @@
 
 <%block name="alert_block"></%block>
 
-<%block name="content_catalog">
-      <div id="content-catalog" class="container">
-        
-      	<h1> ${ user.first_name }'s Account Information </h1>
+<%block name="middle_column"> 
 
-      	<a href="/account/account_edit/${ user.id }/">Edit Account Information</a>
+	<h1> ${ user.first_name }'s Account Information </h1>
 
-      	<span></span>
+  	<a href="/account/account_edit/${ user.id }/">Edit Account Information</a>
 
-      	<a href="/account/password/${ user.id }/">Change Password</a>
+  	<span></span>
 
-      </div>
+  	<a href="/account/password/${ user.id }/">Change Password</a>
+
 </%block>
+
+	
+  
+
