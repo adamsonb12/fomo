@@ -18,10 +18,19 @@
 
 	<div class="desc col-md-7 col-xs-12">
 		<h1> ${product.name} </h1>
+		<h4> ${product.category.name } </h4>
 		<p> Reviews and Ratings </p>
 		<hr/>
 
-		<h4 class="p_title"> Price: </h4> <h3 class="price">${product.price}</h3> 
+		<h4 class="p_title"> Price: </h4> 
+		<h3 class="price">${product.price}</h3> 
+		<button class="btn btn-default btn-sm">Compare</button>
+
+		%if hasattr(product, 'quantity'):
+			<h4 class="green"> In Stock </h4>		
+			<span class="quantity_text" >There are ${ product.quantity } left in stock.</span>
+		%else:
+		%endif
 	</div>
 
 </%block>
