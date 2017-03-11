@@ -32,7 +32,7 @@ from polymorphic.models import PolymorphicModel
 
 class Category(models.Model):
 	# id
-	codename = models.TextField(blank=True, null=True)
+	codename = models.TextField(blank=True, null=True, unique=True)
 	name = models.TextField(blank=True, null=True)
 
 	def __str__(self):
@@ -46,6 +46,9 @@ class Product(PolymorphicModel):
 	price = models.DecimalField(max_digits=8, decimal_places=2)
 	create_date = models.DateTimeField(auto_now_add=True)
 	modified_date = models.DateTimeField(auto_now=True)
+	imgList = models.TextField(null=True) # JSON-serialized (text) version of your list
+	descriptionList = models.TextField(null=True) # JSON-serialized (text) version of your list
+
 
 
 class BulkProduct(Product):

@@ -13,15 +13,78 @@
 <%block name="middle_column"> 
 
 	<div class="prod_img col-md-5 col-xs-12">
-
+		<img src="${iList[1]}" class="img-responsive">
 	</div>
 
 	<div class="desc col-md-7 col-xs-12">
 		<h1> ${product.name} </h1>
+		<h4> ${product.category.name } </h4>
 		<p> Reviews and Ratings </p>
 		<hr/>
 
-		<h4 class="p_title"> Price: </h4> <h3 class="price">${product.price}</h3> 
+		<h4 class="p_title"> Price: </h4> 
+		<h3 class="price">${product.price}</h3> 
+		<button class="btn btn-default btn-sm">Compare</button>
+
+		%if hasattr(product, 'quantity'):
+			<h4 class="green"> In Stock </h4>		
+			<span class="quantity_text" >There are ${ product.quantity } left in stock.</span>
+		%else:
+		%endif
+
+		<h3> Description </h3>
+
+		<ul>
+			% for d in dList:
+				<li> ${d} </li>
+			% endfor
+		</ul>
+
+		<button class="btn btn-success">Place Order</button>
+
+		%if hasattr(product, 'quantity'):
+			<div class="dropdown">
+			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    Quantity
+			  </button>
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			    <a class="dropdown-item" href="#">1</a>
+			    <a class="dropdown-item" href="#">2</a>
+			    <a class="dropdown-item" href="#">3</a>
+			    <a class="dropdown-item" href="#">4</a>
+			    <a class="dropdown-item" href="#">5</a>
+			    <a class="dropdown-item" href="#">6</a>
+			    <a class="dropdown-item" href="#">7</a>
+			    <a class="dropdown-item" href="#">8</a>
+			    <a class="dropdown-item" href="#">9</a>
+			    <a class="dropdown-item" href="#">10</a>
+			  </div>
+			</div>
+		%else:
+		%endif
+
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="images_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">${product.name} Images</h4>
+	      </div>
+	      <div id="modal-images" class="modal-body">
+	      	% for img in iList:
+				<img src="${img}" class="img-modal">
+			% endfor
+	        <button id="previous" class="btn btn-default">Previous</button>
+	        <button id="next" class="btn btn-default">Next</button>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 
 </%block>

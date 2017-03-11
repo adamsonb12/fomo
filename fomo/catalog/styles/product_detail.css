@@ -7,3 +7,19 @@
 .p_title {
 	display: inline;
 }
+
+.p_compare {
+	display: inline;
+}
+
+.green {
+	color: green;
+}
+
+.img-responsive {
+	cursor: pointer;
+}
+
+.img-modal {
+	max-width: 400px;
+}
