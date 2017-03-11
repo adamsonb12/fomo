@@ -176,6 +176,10 @@ p2.serial_number = '3456asdf'
 p2.name = 'Clarinet'
 p2.category = cat2
 p2.price = Decimal('199.99')
+dList = ['Violin hand made in 1456', 'Played be Bach and Beethoved', 'Korys favorite instrument']
+p2.descriptionList = json.dumps(dList)
+iList = ['/static/homepage/media/img/violin.jpg', '/static/homepage/media/img/violin2.png', '/static/homepage/media/img/violin3.jpg', '/static/homepage/media/img/thumbnail_violin.jpg']
+p2.imgList = json.dumps(iList)
 p2.save()
 
 # Create a Unique Product
@@ -185,6 +189,10 @@ p3.serial_number = '2345asdf'
 p3.name = 'Trumpet'
 p3.category = cat1
 p3.price = Decimal('250.99')
+dList = ['Violin hand made in 1456', 'Played be Bach and Beethoved', 'Korys favorite instrument']
+p3.descriptionList = json.dumps(dList)
+iList = ['/static/homepage/media/img/violin.jpg', '/static/homepage/media/img/violin2.png', '/static/homepage/media/img/violin3.jpg', '/static/homepage/media/img/thumbnail_violin.jpg']
+p3.imgList = json.dumps(iList)
 p3.save()
 
 # Create a Bulk Product
@@ -195,6 +203,10 @@ p4.price = Decimal('9.50')
 p4.quantity = 20
 p4.reorder_trigger = 5
 p4.reorder_quantity = 30
+dList = ['Violin hand made in 1456', 'Played be Bach and Beethoved', 'Korys favorite instrument']
+p4.descriptionList = json.dumps(dList)
+iList = ['/static/homepage/media/img/violin.jpg', '/static/homepage/media/img/violin2.png', '/static/homepage/media/img/violin3.jpg', '/static/homepage/media/img/thumbnail_violin.jpg']
+p4.imgList = json.dumps(iList)
 p4.save()
 
 # Create a Bulk Product
@@ -205,6 +217,10 @@ p5.price = Decimal('12.50')
 p5.quantity = 12
 p5.reorder_trigger = 2
 p5.reorder_quantity = 10
+dList = ['Violin hand made in 1456', 'Played be Bach and Beethoved', 'Korys favorite instrument']
+p5.descriptionList = json.dumps(dList)
+iList = ['/static/homepage/media/img/violin.jpg', '/static/homepage/media/img/violin2.png', '/static/homepage/media/img/violin3.jpg', '/static/homepage/media/img/thumbnail_violin.jpg']
+p5.imgList = json.dumps(iList)
 p5.save()
 
 # Create a Bulk Product
@@ -215,6 +231,10 @@ p6.price = Decimal('5.50')
 p6.quantity = 30
 p6.reorder_trigger = 10
 p6.reorder_quantity = 30
+dList = ['Violin hand made in 1456', 'Played be Bach and Beethoved', 'Korys favorite instrument']
+p6.descriptionList = json.dumps(dList)
+iList = ['/static/homepage/media/img/violin.jpg', '/static/homepage/media/img/violin2.png', '/static/homepage/media/img/violin3.jpg', '/static/homepage/media/img/thumbnail_violin.jpg']
+p6.imgList = json.dumps(iList)
 p6.save()
 
 # Create a Rental Product
@@ -224,6 +244,10 @@ p7.serial_number = '1357asdf'
 p7.name = 'Trumpet'
 p7.category = cat1
 p7.price = Decimal('12.99')
+dList = ['Violin hand made in 1456', 'Played be Bach and Beethoved', 'Korys favorite instrument']
+p7.descriptionList = json.dumps(dList)
+iList = ['/static/homepage/media/img/violin.jpg', '/static/homepage/media/img/violin2.png', '/static/homepage/media/img/violin3.jpg', '/static/homepage/media/img/thumbnail_violin.jpg']
+p7.imgList = json.dumps(iList)
 p7.save()
 
 # Create a Rental Product
@@ -233,6 +257,10 @@ p8.serial_number = '2468asdf'
 p8.name = 'Tuba'
 p8.category = cat1
 p8.price = Decimal('16.99')
+dList = ['Violin hand made in 1456', 'Played be Bach and Beethoved', 'Korys favorite instrument']
+p8.descriptionList = json.dumps(dList)
+iList = ['/static/homepage/media/img/violin.jpg', '/static/homepage/media/img/violin2.png', '/static/homepage/media/img/violin3.jpg', '/static/homepage/media/img/thumbnail_violin.jpg']
+p8.imgList = json.dumps(iList)
 p8.save()
 
 # Create a Rental Product
@@ -242,6 +270,10 @@ p9.serial_number = '9876asdf'
 p9.name = 'Trombone'
 p9.category = cat1
 p9.price = Decimal('11.99')
+dList = ['Violin hand made in 1456', 'Played be Bach and Beethoved', 'Korys favorite instrument']
+p9.descriptionList = json.dumps(dList)
+iList = ['/static/homepage/media/img/violin.jpg', '/static/homepage/media/img/violin2.png', '/static/homepage/media/img/violin3.jpg', '/static/homepage/media/img/thumbnail_violin.jpg']
+p9.imgList = json.dumps(iList)
 p9.save()
 
 
