@@ -13,7 +13,7 @@
 <%block name="middle_column"> 
 
 	<div class="prod_img col-md-5 col-xs-12">
-
+		<img src="${iList[1]}" class="img-responsive">
 	</div>
 
 	<div class="desc col-md-7 col-xs-12">
@@ -31,6 +31,15 @@
 			<span class="quantity_text" >There are ${ product.quantity } left in stock.</span>
 		%else:
 		%endif
+
+		<h3> Description </h3>
+
+		<ul>
+			% for d in dList:
+				<li> ${d} </li>
+			% endfor
+		</ul>
+
 	</div>
 
 </%block>

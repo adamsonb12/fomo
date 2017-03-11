@@ -4,16 +4,22 @@ from django_mako_plus import view_function
 from datetime import datetime
 from catalog import models as cmod
 from .. import dmp_render, dmp_render_to_string
+import json as json
 
 @view_function
 def process_request(request):
 
 	try: 
 		product = cmod.Product.objects.get(id=request.urlparams[0])
+		jsonDec = json.decoder.JSONDecoder()
+		dList = jsonDec.decode(product.descriptionList)
+		iList = jsonDec.decode(product.imgList)
 	except cmod.Product.DoesNotExist:
 		return HttpResponseRedirect('/manager/products/')
 
 	context = {
 	    'product': product,
+	    'dList': dList,
+	    'iList': iList,
 	}
 	return dmp_render(request, 'product_detail.html', context)

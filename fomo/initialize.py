@@ -8,6 +8,7 @@ django.setup()
 from django.contrib.auth.models import Permission, Group
 from datetime import datetime
 from decimal import Decimal
+import json as json
 
 from account import models as amod #account models
 from catalog import models as cmod #catalog models
@@ -162,6 +163,10 @@ p1.serial_number = '1234asdf'
 p1.name = 'Violin'
 p1.category = cat5
 p1.price = Decimal('250.99')
+dList = ['Violin hand made in 1456', 'Played be Bach and Beethoved', 'Korys favorite instrument']
+p1.descriptionList = json.dumps(dList)
+iList = ['/static/homepage/media/img/violin.jpg', '/static/homepage/media/img/violin2.png', '/static/homepage/media/img/violin3.jpg', '/static/homepage/media/img/thumbnail_violin.jpg']
+p1.imgList = json.dumps(iList)
 p1.save()
 
 # Create a Unique Product

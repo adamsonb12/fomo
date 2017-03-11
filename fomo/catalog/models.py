@@ -46,6 +46,8 @@ class Product(PolymorphicModel):
 	price = models.DecimalField(max_digits=8, decimal_places=2)
 	create_date = models.DateTimeField(auto_now_add=True)
 	modified_date = models.DateTimeField(auto_now=True)
+	imgList = models.TextField(null=True) # JSON-serialized (text) version of your list
+	descriptionList = models.TextField(null=True) # JSON-serialized (text) version of your list
 
 
 
