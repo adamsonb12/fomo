@@ -10,18 +10,23 @@
 	<p> List </p>
 </%block>
 
-<%block name="middle_column"> 
+<%block name="middle_column">
 
-	<div class="prod_img col-md-5 col-xs-12">
-		<img src="${iList[1]}" class="img-responsive">
-	</div>
+	<div class="prod_img col-md-5 col-xs-12"></div>	
 
 	<div class="desc col-md-7 col-xs-12">
 		<h1> ${product.name} </h1>
 		<h4> ${product.category.name } </h4>
 		<p> Reviews and Ratings </p>
 		<hr/>
+	</div> 
 
+	<div class="prod_img col-md-5 col-xs-12">
+		<img src="${iList[0]}" class="img-responsive">
+	</div>
+
+	<div class="desc col-md-7 col-xs-12">
+		
 		<h4 class="p_title"> Price: </h4> 
 		<h3 class="price">${product.price}</h3> 
 		<button class="btn btn-default btn-sm">Compare</button>
@@ -87,8 +92,4 @@
 	  </div>
 	</div>
 
-</%block>
-
-<%block name="right_column"> 
-	<p> Last 5 </p>
 </%block>

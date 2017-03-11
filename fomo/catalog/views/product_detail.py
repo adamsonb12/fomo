@@ -10,12 +10,20 @@ import json as json
 def process_request(request):
 
 	try: 
+		add = True
 		product = cmod.Product.objects.get(id=request.urlparams[0])
 		jsonDec = json.decoder.JSONDecoder()
 		dList = jsonDec.decode(product.descriptionList)
 		iList = jsonDec.decode(product.imgList)
 	except cmod.Product.DoesNotExist:
 		return HttpResponseRedirect('/manager/products/')
+
+	# Add to last five
+	for l in request.last5:
+		if(product.id == l):
+			add = False
+	if(add == True):
+		request.last5.insert( 0, product.id)
 
 	context = {
 	    'product': product,
