@@ -10,14 +10,27 @@
 <%block name="alert_block"></%block>
 
 <%block name="left_column"> 
-	<ul>
+	<h2> Categories </h2>
+	<ul class="list-group">
+		<a href="/catalog/index/"><li class="list-group-item"> All Products </li> </a>
 	% for c in categories:
-		<a href="/catalog/index/${c.id}"><li> ${c.name} </li> </a>
+		<a href="/catalog/index/${c.id}"><li class="list-group-item"> ${c.name} </li> </a>
 	% endfor
 	</ul>
 </%block>
 
 <%block name="middle_column"> 
+	
+	<div class="row">
+		<div class="col-md-7 col-xs-12">
+			<h1> Instruments and Accessories </h1>
+		</div>
+		<div class="col-md-5 col-xs-12 search-bar">
+
+		</div>
+	</div>
+
+	<hr/>
 
 	% for p in products:
 		<div class="product-container">

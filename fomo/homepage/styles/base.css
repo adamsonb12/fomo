@@ -28,6 +28,7 @@
 
 #left_column {
     list-style: none;
+    border-right-style: solid;
 }
 
 #middle_content {

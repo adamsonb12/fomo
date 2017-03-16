@@ -11,9 +11,15 @@ def process_request(request):
 
 	try:
 		categories = cmod.Category.objects.filter()
-		products = cmod.Product.objects.filter()
+		if(request.urlparams[0] == None or request.urlparams[0] == ''):
+			products = cmod.Product.objects.all()
+		else:
+			products = cmod.Product.objects.filter(category = request.urlparams[0])
+
 	except cmod.Category.DoesNotExist:
 		return HttpResponseRedirect('/homepage/')
+	
+	
 
 	context = {
 		'categories': categories,
