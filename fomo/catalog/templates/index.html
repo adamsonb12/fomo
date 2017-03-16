@@ -1,4 +1,7 @@
-<%inherit file="app_base.htm" />
+<%! import json as json %>
+<%! from catalog import models as cmod %>
+<%! from datetime import datetime %>
+<%! from datetime import timedelta %>
 
 <%inherit file="app_base.htm" />
 
@@ -7,15 +10,23 @@
 <%block name="alert_block"></%block>
 
 <%block name="left_column"> 
-	<p> List </p>
+	<ul>
+	% for c in categories:
+		<a href="/catalog/index/${c.id}"><li> ${c.name} </li> </a>
+	% endfor
+	</ul>
 </%block>
 
 <%block name="middle_column"> 
 
-	<h1> Catalog App </h1>
+	% for p in products:
+		<div class="product-container">
+			<a href="/catalog/product_detail/${p.id}"> <img class="prod-img thumbnail" src="${ json.decoder.JSONDecoder().decode(cmod.Product.objects.get(id=p.id).imgList)[0]}"></a>
+			<a href="/catalog/product_detail/${p.id}"><button class="btn btn-sm btn-default prod-button">See Details</button></a>
+			<h3 class="prod-title"> ${ p.name } </h3>
+			<h4 class="price"> ${ p.price } </h4>
+			<p> Order by 5 p.m. MDT and get this before ${ datetime.date(datetime.now() + timedelta(days=4, hours=2))}
+		</div>
+	% endfor
 
-</%block>
-
-<%block name="right_column"> 
-	<p> Last 5 </p>
 </%block>

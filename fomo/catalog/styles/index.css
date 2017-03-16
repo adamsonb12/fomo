@@ -1,0 +1,23 @@
+
+/* Left sidebar */
+
+ul {
+	list-style-type: none;
+}
+
+/* Prdocuts */
+
+.product-container {
+	display: inline-block;
+	padding: 15px;
+	height: 400px;
+	max-width: 290px;
+}
+
+.prod-img {
+	width: 250px;
+	height: 200px;
+	object-fit: cover;
+	object-position: 0% 0%;
+}
+
