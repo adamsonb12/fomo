@@ -28,3 +28,27 @@ def process_request(request):
 
 
 	return dmp_render(request, 'index.html', context)
+
+@view_function
+def search(request):
+
+	search = request.GET.get('search')
+
+	products = []
+	qry = cmod.Product.objects
+
+	if product_name:
+		qry = qry.filter(name__icontains=search)
+		qry = qry.filter(category__name__icontains=search)
+
+	if qry.exists():
+		for p in qry:
+			products.append(p)
+	else:
+		return HttpResponseRedirect('/catalog/index/')
+
+	context = {
+		'products': products,
+	}
+
+	return dmp_render_to_response(request, 'index.html', context)
