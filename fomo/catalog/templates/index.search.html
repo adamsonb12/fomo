@@ -1,0 +1,53 @@
+<%! import json as json %>
+<%! from catalog import models as cmod %>
+<%! from datetime import datetime %>
+<%! from datetime import timedelta %>
+
+<%inherit file="app_base.htm" />
+
+<%block name="header_message"></%block>
+
+<%block name="alert_block"></%block>
+
+<%block name="left_column"> 
+	<h2> Categories </h2>
+	<ul class="list-group">
+		<a href="/catalog/index/"><li class="list-group-item"> All Products </li> </a>
+	% for c in categories:
+		<a href="/catalog/index/${c.id}"><li class="list-group-item"> ${c.name} </li> </a>
+	% endfor
+	</ul>
+</%block>
+
+<%block name="middle_column"> 
+	
+	<div class="row">
+		<div class="col-md-7 col-xs-12">
+			<h1> Instruments and Accessories </h1>
+		</div>
+	</div>
+
+	<hr/>
+
+	% for p in products:
+		<a href="/catalog/product_detail/"><div class="product-container">
+			<div class="row">
+				<div class="col-md-4">
+					<h2> ${ p.name } </h2>
+					<img class="prod-img thumbnail" src="${ json.decoder.JSONDecoder().decode(cmod.Product.objects.get(id=p.id).imgList)[0]}">
+				</div>
+				<div class="col-md-6 desc">
+					<ul>
+						% for d in json.decoder.JSONDecoder().decode(p.descriptionList):
+							<li> ${d} </li>
+						% endfor
+					</ul>	
+				</div>
+				<div class="col-md-2 desc">
+					<p> ${ p.price }</p>	
+				</div>
+			</div>
+		</div></a>
+	% endfor
+
+</%block>

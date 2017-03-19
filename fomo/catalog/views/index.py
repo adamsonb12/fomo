@@ -32,14 +32,19 @@ def process_request(request):
 @view_function
 def search(request):
 
+	try:
+		categories = cmod.Category.objects.filter()
+	except cmod.Category.DoesNotExist:
+		return HttpResponseRedirect('/homepage/')
+
 	search = request.GET.get('search')
 
 	products = []
-	qry = cmod.Product.objects
+	qry = cmod.Product.objects.all()
 
-	if product_name:
+	if search:
 		qry = qry.filter(name__icontains=search)
-		qry = qry.filter(category__name__icontains=search)
+		# qry = qry.filter(category__name__icontains=search)
 
 	if qry.exists():
 		for p in qry:
@@ -48,7 +53,14 @@ def search(request):
 		return HttpResponseRedirect('/catalog/index/')
 
 	context = {
+		'categories': categories,	
 		'products': products,
 	}
 
-	return dmp_render_to_response(request, 'index.html', context)
+	return dmp_render(request, 'index.search.html', context)
+
+
+
+
+
+

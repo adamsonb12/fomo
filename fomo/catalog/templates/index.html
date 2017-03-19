@@ -26,8 +26,10 @@
 			<h1> Instruments and Accessories </h1>
 		</div>
 		<div class="col-md-5 col-xs-12 search-bar">
-			<input id="searchinput" class="form-control search-bar" type="text" value="" placeholder="Search...">
-			<a href="/catalog/index.search/"><button class="search-button btn btn-default">Submit Search </button></a>
+			<form action="/catalog/index.search" method="get">
+				<input id="searchinput" name="search" class="form-control search-bar" type="text" value="" placeholder="Search...">
+				<input type="submit" value="Submit">
+			</form>
 		</div>
 	</div>
 
