@@ -29,3 +29,7 @@ def process_request(request):
 	    'iList': iList,
 	}
 	return dmp_render(request, 'product_detail.html', context)
+
+@view_function
+def add_to_cart(request):
+	

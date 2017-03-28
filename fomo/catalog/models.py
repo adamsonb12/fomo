@@ -75,3 +75,69 @@ class RentalProduct(Product):
 	# category
 	# price
 	serial_number = models.TextField()
+
+# More models connected to the User
+
+class ProductHistory(models.Model):
+	user = models.ForeignKey('account.FomoUser', related_name="history")
+	product = models.ForeignKey('catalog.Product')
+	view_date = models.DateTimeField(auto_now_add=True)
+
+	# def getLastFive(user):
+
+		# Convienence Methods
+		
+		# Logic here to get and return the last 5 viewed products
+
+
+class ShoppingCart(models.Model):
+	user = models.ForeignKey('account.FomoUser', related_name="cart")
+	product = models.ForeignKey('catalog.Product')
+	date_added = models.DateTimeField(auto_now_add=True)
+	modified_date = models.DateTimeField(auto_now=True)
+
+	# Convienence Methods
+
+	# clear cart
+	# Retrieve Items
+	# Calculate Tax
+	# Calculate Subtotal
+	# Number of items in cart
+
+class Sale(models.Model):
+	user = models.ForeignKey('account.FomoUser', related_name="sales")
+	sale_date = models.DateTimeField(auto_now_add=True)
+	modified_date = models.DateTimeField(auto_now=True)
+
+	# Convienence Methods
+
+class SaleItem(models.Model):
+	sale = models.ForeignKey('catalog.Sale', related_name="sale_item")
+	quantity = models.IntegerField(default=1)
+	sale_price = models.DecimalField(max_digits=8, decimal_places=2)
+	discount = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+
+	# Convienence Methods
+
+	# Calc Price
+
+class Payment(models.Model):
+	sale = models.ForeignKey('catalog.Sale', related_name="sale_payment")
+	total_paid = models.DecimalField(max_digits=8, decimal_places=2)
+	payment_date = models.DateTimeField(auto_now_add=True)
+	modified_date = models.DateTimeField(auto_now=True)
+
+	# Convienence Methods
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -28,3 +28,4 @@ class FomoUser(AbstractUser):
     gender = models.TextField(null=True, blank=True, choices=GENDER_CHOICES, default = 'other',)
 
 
+
