@@ -27,5 +27,12 @@ class FomoUser(AbstractUser):
     birth_date = models.DateTimeField('Birth Date')
     gender = models.TextField(null=True, blank=True, choices=GENDER_CHOICES, default = 'other',)
 
+class ShippingAddress(models.Model):
+    user = models.ForeignKey('account.FomoUser', related_name="sales")
+    shipping_address = models.TextField()
+    shipping_city = models.TextField()
+    shipping_state = models.TextField()
+    shipping_zipcode = models.TextField()
+
 
 
