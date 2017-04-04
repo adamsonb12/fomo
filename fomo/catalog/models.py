@@ -97,35 +97,13 @@ class ProductHistory(models.Model):
 
 
 class ShoppingCart(models.Model):
-	user = models.ForeignKey('account.FomoUser', on_delete=models.CASCADE, related_name="cart")
+	user = models.ForeignKey('account.FomoUser', on_delete=models.CASCADE, related_name="user_cart")
 	product = models.ForeignKey('catalog.Product', null=True)
 	quantity = models.IntegerField(default=1)
 	date_added = models.DateTimeField(auto_now_add=True)
 	modified_date = models.DateTimeField(auto_now=True)
 
 	# Convienence Methods
-
-	# add item to cart
-	def addItem(uid, pid, quantity):
-		try:
-			user = amod.objects.get(id=uid)
-			product = Product.objects.get(id=pid)
-		except:
-			return HttpResponseRedirect('/catalog/index/')	
-		self.user = user
-
-		# check product availability 
-		if hasattr(product, 'quantity'):
-			if product.quantity < quantity:
-				return False
-			self.product = product
-			self.product.quantity = quantity
-			product.quantity -= quantity
-			product.save()
-		if hasattr(product, 'available'):
-			self.product = product
-			product.available = False
-			product.save()
 		
 
 	# remove item from cart
@@ -136,7 +114,7 @@ class ShoppingCart(models.Model):
 	# Number of items in cart
 
 class Sale(models.Model):
-	user = models.ForeignKey('account.FomoUser', related_name="sales")
+	user = models.ForeignKey('account.FomoUser', related_name="user_sales")
 	sale_date = models.DateTimeField(auto_now_add=True)
 	modified_date = models.DateTimeField(auto_now=True)
 	sale_price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
