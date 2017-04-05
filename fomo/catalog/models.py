@@ -104,7 +104,6 @@ class ShoppingCart(models.Model):
 	modified_date = models.DateTimeField(auto_now=True)
 
 	# Convienence Methods
-		
 
 	# remove item from cart
 	# clear cart

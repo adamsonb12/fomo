@@ -3,8 +3,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django_mako_plus import view_function
 from datetime import datetime
 from catalog import models as cmod
+from account import models as amod
 from .. import dmp_render, dmp_render_to_string
 import json as json
+import random 
 
 from formlib.form import FormMixIn
 from django import forms
@@ -30,13 +32,17 @@ def process_request(request):
 	if form.is_valid():
 		form.commit()
 
+	template = 'product_detail.html'
+	if request.method == 'POST':
+		template = 'product_detail_ajax.html'
+
 	context = {
 	    'product': product,
 	    'dList': dList,
 	    'iList': iList,
 	    'form': form,
 	}
-	return dmp_render(request, 'product_detail.html', context)
+	return dmp_render(request, template, context)
 
 # Make this into a Form crap
 class AddToCartForm(FormMixIn, forms.Form):
@@ -46,52 +52,43 @@ class AddToCartForm(FormMixIn, forms.Form):
 	
 	def init(self, product):
 
+		self.product = product
+
 		if hasattr(product, 'quantity'):
 			self.fields['quantity'] = forms.IntegerField(required=False)
-
+ 
 	# Clean method here
 	def clean_quantity(self):
 		qty = self.cleaned_data.get('quantity')
-		# Call database
-			# raise form.ValidationError('''Sorry! We don't have that much in stock. ''')
+		if self.product.quantity < qty:
+			raise forms.ValidationError('''Sorry! We don't have that much in stock. ''')
 		return qty
 
 	def commit(self):
-		pass
 
-# @view_function
-# def add_to_cart(request):
+		try:
+			user = amod.FomoUser.objects.get(id=self.request.user.id)
+		except amod.FomoUser.DoesNotExist:
+			return HttpResponseRedirect('/catalog/index')
 
-# 	uid = request.user.id
-# 	pid = request.urlparams[0]
-# 	quantity = 1
-# 	cmod.ShoppingCart.addItem(uid, pid, quantity)
-# 	return HttpResponseRedirect('/catalog/product_detail/' + pid)
+		cart = cmod.ShoppingCart()
+		cart.user = user
+		cart.product = self.product
 
-# 	# add item to cart
-# 	def addItem(uid, pid, quantity):
-# 		try:
-# 			user = amod.objects.get(id=uid)
-# 			product = Product.objects.get(id=pid)
-# 		except:
-# 			return HttpResponseRedirect('/catalog/index/')
+		qty = self.cleaned_data.get('quantity')
 
-# 		cart = ShoppingCart()
-# 		cart.user = user
-# 		cart.product = product
-
-# 		# check product availability 
-# 		if hasattr(product, 'quantity'):
-# 			if product.quantity < quantity:
-# 				return HttpResponse('Not enough in Inventory')
-# 			cart.product.quantity = quantity
-# 			product.quantity -= quantity
-# 			product.save()
-# 		if hasattr(product, 'available'):
-# 			if product.available:
-# 				product.available = False
-# 				product.save()
-# 			else:
-# 				return HttpResponse('Product No Longer Available')
-# 		cart.save()
-# 		return 4
+		# check product availability 
+		if hasattr(cart.product, 'quantity'):
+			cart.quantity = qty
+			self.product.quantity -= qty
+			self.product.save()
+		if hasattr(cart.product, 'available'):
+			if self.product.available:
+				self.product.available = False
+				self.product.save()
+			else:
+				raise forms.ValidationError('''Sorry! That product is no longer available. ''')
+		cart.save()
+		# ret = stripe charge token
+		return 4
+		
