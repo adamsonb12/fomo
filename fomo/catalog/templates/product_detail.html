@@ -31,7 +31,7 @@
 
 		%if hasattr(product, 'quantity'):
 			<h4 class="green"> In Stock </h4>		
-			<span class="quantity_text" >There are ${ product.quantity } left in stock.</span>
+			<span class="quantity_text" >There are <span id="inventory" >${ product.quantity } </span> left in stock.</span>
 		%else:
 		%endif
 

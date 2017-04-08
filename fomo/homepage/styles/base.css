@@ -73,3 +73,7 @@
 hr {
   border-color: #413D3D;
 }
+
+#modallogin_button {
+	cursor: pointer;
+}

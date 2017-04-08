@@ -2,6 +2,7 @@ from django.db import models
 from polymorphic.models import PolymorphicModel
 from account import models as amod
 from django.http import HttpResponse, HttpResponseRedirect
+import decimal
 
 # Create your models here.
 
@@ -102,15 +103,60 @@ class ShoppingCart(models.Model):
 	quantity = models.IntegerField(default=1)
 	date_added = models.DateTimeField(auto_now_add=True)
 	modified_date = models.DateTimeField(auto_now=True)
+	tax = models.DecimalField(max_digits=8, decimal_places=4, default=.0725)
+	total_shipping = models.DecimalField(max_digits=8, decimal_places=2, default=10)
 
-	# Convienence Methods
+
+
+	# Convienence Methods -- Test Still
 
 	# remove item from cart
+	@staticmethod
+	def remove_item(pid, uid):
+		cart = ShoppingCart.objects.filter(user_id=uid)
+		cart = ShoppingCart.objects.filter(product_id=pid)
+		for c in cart:
+			if hasattr(c.product, 'quantity'):
+				c.product.quantity += c.quantity
+				c.product.save()
+			if hasattr(c.product, 'available'):
+				c.product.available = True
+				c.product.save()
+			c.delete()
+		return 4
+
 	# clear cart
-	# Retrieve Items
-	# Calculate Tax
+	@staticmethod
+	def clear_cart(user_id):
+		cart = ShoppingCart.objects.filter(user_id=user_id)
+		for c in cart:
+			if hasattr(c.product, 'quantity'):
+				c.product.quantity += c.quantity
+				c.product.save()
+			if hasattr(c.product, 'available'):
+				c.product.available = True
+				c.product.save()
+			c.delete()
+		return 4
+        
+	# Retrieve Items --> In FomoUser class
+
 	# Calculate Subtotal
-	# Number of items in cart
+	@staticmethod
+	def calc_subtotal(user_id):
+		cart = ShoppingCart.objects.filter(user_id=user_id)
+		total = 0
+		for c in cart:
+				total += (c.product.price*c.quantity)
+		return decimal.Decimal(total)
+
+	@staticmethod
+	def calc_tax(subtotal):
+		return decimal.Decimal(subtotal*ShoppingCart.objects.get(id=1).tax)
+		
+
+
+	# Number of items in cart --> In FomoUser class
 
 class Sale(models.Model):
 	user = models.ForeignKey('account.FomoUser', related_name="user_sales")
@@ -119,13 +165,7 @@ class Sale(models.Model):
 	sale_price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
 	total_tax = models.DecimalField(max_digits=8, decimal_places=2, default=0)
 
-	# Convienence Methods
-
-	# # Create a record_sale() method in your models.py file.  
-	# This method should 1) create a Sale object, 2) 
-	# create one or more SaleItem objects for the purchases, 
-	# 4) create a 
-	# Payment object, 5) update BulkProduct quantities and IndividualProduct availability.
+	# Convienence Method
 
 	@staticmethod
 	def record_sale(user, cart_items_list, address, city, state, zipcode, stripe_charge_token):
@@ -187,15 +227,26 @@ class Sale(models.Model):
 class SaleItem(models.Model):
 	sale = models.ForeignKey('Sale', on_delete=models.CASCADE, related_name='sale')
 	product = models.ForeignKey('Product', related_name='saleitems', null=True)
-	quantity = models.IntegerField(default=1)
 	sale_price = models.DecimalField(max_digits=8, decimal_places=2)
 	discount = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-	tax = models.DecimalField(max_digits=8, decimal_places=2, default=7.25)
+	tax = models.DecimalField(max_digits=8, decimal_places=4, default=.0725)
 	tax_amount = models.DecimalField(max_digits=8, decimal_places=2, default=0)
 
 	# Convienence Methods
 
 	# Calc Price
+	def calc_sale_price(self):
+		self.sale_price = self.product.price
+		return decimal.Decimal(self.sale_price)
+
+	# Calc Tax
+	def calc_tax_amount(self):
+		self.tax_amount = self.sale_price*self.tax
+		return decimal.Decimal(self.tax_amount)
+
+	# Calc total price
+	def calc_total_price(self):
+		return decimal.Decimal((self.sale_price+self.tax_amount))
 
 class Payment(models.Model):
 	sale = models.ForeignKey('Sale', on_delete=models.CASCADE, related_name='payments')

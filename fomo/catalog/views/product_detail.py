@@ -87,7 +87,7 @@ class AddToCartForm(FormMixIn, forms.Form):
 				self.product.available = False
 				self.product.save()
 			else:
-				raise forms.ValidationError('''Sorry! That product is no longer available. ''')
+				raise forms.ValidationError(''' Sorry! That product is no longer available ''')
 		cart.save()
 		# ret = stripe charge token
 		return 4
