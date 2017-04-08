@@ -1,0 +1,20 @@
+<%inherit file="app_base.htm" />
+
+<%block name="header_message"></%block>
+
+<%block name="alert_block"></%block>
+
+<%block name="left_column"> </%block>
+
+<%block name="middle_column">
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+	<h3> Hi ${ user.first_name }, please enter your shipping information below </h3>
+
+	${ form }
+
+	<h3> Order Summary </h3>
+	<h4> Subtotal: $${ subtotal } Tax: $${ tax } Shipping: $${ shipping } Total: $${ total } </h4>
+
+</%block>

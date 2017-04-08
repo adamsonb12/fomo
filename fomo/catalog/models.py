@@ -105,8 +105,8 @@ class ShoppingCart(models.Model):
 	modified_date = models.DateTimeField(auto_now=True)
 	tax = models.DecimalField(max_digits=8, decimal_places=4, default=.0725)
 	total_shipping = models.DecimalField(max_digits=8, decimal_places=2, default=10)
-
-
+	sold = models.BooleanField(default=False)
+	active = models.BooleanField(default=True)
 
 	# Convienence Methods -- Test Still
 
@@ -122,7 +122,7 @@ class ShoppingCart(models.Model):
 			if hasattr(c.product, 'available'):
 				c.product.available = True
 				c.product.save()
-			c.delete()
+			c.active = False
 		return 4
 
 	# clear cart
@@ -153,6 +153,17 @@ class ShoppingCart(models.Model):
 	@staticmethod
 	def calc_tax(subtotal):
 		return decimal.Decimal(subtotal*ShoppingCart.objects.get(id=1).tax)
+
+	@staticmethod
+	def calc_total_amount(user_id):
+		cart = ShoppingCart.objects.filter(user_id=user_id)
+		total = 0
+		for c in cart:
+				total += (c.product.price*c.quantity)
+
+		return decimal.Decimal(total+(total*ShoppingCart.objects.get(id=1).tax))
+
+
 		
 
 
@@ -231,18 +242,19 @@ class SaleItem(models.Model):
 	discount = models.DecimalField(max_digits=8, decimal_places=2, null=True)
 	tax = models.DecimalField(max_digits=8, decimal_places=4, default=.0725)
 	tax_amount = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+	quantity = models.IntegerField(default=1)
 
 	# Convienence Methods
 
 	# Calc Price
 	def calc_sale_price(self):
-		self.sale_price = self.product.price
+		self.sale_price = self.product.price*self.quantity
 		return decimal.Decimal(self.sale_price)
 
 	# Calc Tax
 	def calc_tax_amount(self):
-		self.tax_amount = self.sale_price*self.tax
-		return decimal.Decimal(self.tax_amount)
+		self.tax_amount = self.product.price * self.tax
+		return self.tax_amount
 
 	# Calc total price
 	def calc_total_price(self):

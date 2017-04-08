@@ -1,0 +1,35 @@
+<%inherit file="app_base.htm" />
+
+<%block name="header_message"></%block>
+
+<%block name="alert_block"></%block>
+
+<%block name="left_column"> </%block>
+
+<%block name="middle_column">
+
+	<div class="receipt">
+
+		<h3> Thank you for your order! </h3>
+		<h4> Order Details </h4>
+		<hr/>
+
+		<table class="table table-striped"> 
+	  		<tr>
+		  		<th> Product </th>
+		  		<th> Quantity </th>
+		  		<th> Price </th>
+			</tr>
+			
+			% for i in items:
+				<tr>
+					<td> ${ i.product.name} </td>
+					<td> ${ i.quantity } </td>
+					<td> ${ i.sale_price } </td>
+				</tr>
+			% endfor
+		</table>
+
+	</div>
+
+</%block>
