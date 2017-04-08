@@ -68,6 +68,7 @@ class FormMixIn(object):
         ${ form }
 
     """
+    form_id = 'form'
     form_action = None
     form_method = 'POST'
     form_submit = 'Submit'

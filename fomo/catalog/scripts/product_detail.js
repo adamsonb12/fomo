@@ -40,4 +40,9 @@ $(function(){
 		showPic();
 	});//click
 
+	// Add to Cart Form
+	$('#add_to_cart_form').ajaxForm({
+		target: '#cart_form',
+	});
+
 });//ready

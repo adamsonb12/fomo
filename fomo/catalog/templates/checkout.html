@@ -1,9 +1,5 @@
-<%! import json as json %>
-<%! from catalog import models as cmod %>
-<%! from datetime import datetime %>
-<%! from datetime import timedelta %>
-
 <%inherit file="app_base.htm" />
+<%! import json as json %>
 
 <%block name="header_message"></%block>
 
@@ -11,10 +7,68 @@
 
 <%block name="left_column"> </%block>
 
-<%block name="middle_column"> 
+<%block name="middle_column">
 
-	% for p in products:
-		<p>{{p.name}}</p>
+	
+	 <div class="row">
+		<div class="col-md-7 shopping_img">
+			<h1> Shopping Cart </h1>
+		</div>
+
+		<div class="col-md-2 shopping_info">
+			<p class="bottom"> Price </p>
+		</div>
+
+		<div class="col-md-2 shopping_info">
+			<p class="bottom"> Total Price </p>
+		</div>
+
+		<div class="col-md-1 shopping_info">
+			<p class="bottom"> Quantity </p>
+		</div>
+	</div>
+
+	<hr/>
+
+	% for c in cart:
+		<div class="row">
+			<div class="col-md-3 shopping_img">
+				<a href="/catalog/product_detail/${c.product.id}"> <img class="prod-img thumbnail" src="${ json.decoder.JSONDecoder().decode(c.product.imgList)[0]}"></a>
+			</div>
+
+			<div class="col-md-4 shopping_info">
+				<a href="/catalog/product_detail/${c.product.id}"><h1> ${c.product.name} </h1> </a>
+				<%
+				    dList = json.decoder.JSONDecoder().decode(c.product.descriptionList)
+				%>  
+				% for d in dList:
+					<li> ${d} </li>
+				% endfor
+				<form action="/catalog/checkout.remove_item" method="get">
+					<input id="product" name="product" class="hidden" type="text" value="${c.product.id}">
+					<input id="remove" type="submit" value="Remove from cart">
+				</form>
+			</div>
+
+			<div class="col-md-2 shopping_price">
+				<h2> ${ c.product.price } </h2>
+			</div>
+
+			<div class="col-md-2 shopping_price">
+				<h2> ${ c.product.price*c.quantity } </h2>
+			</div>
+
+			<div class="col-md-1 shopping_price">
+				<h2> ${ c.quantity} </h2>
+			</div>
+		</div>
+		<hr/>
 	% endfor
+
+	<a href="/catalog/checkout.checkout"><button class="btn btn-success">Checkout Out</button> </a>
+	<a href="/catalog/checkout.clear_cart"><button class="btn btn-danger">Clear Cart</button> </a>
+	<h4 class="right"> Subtotal: $${ subtotal } Tax: $${ tax } Shipping: $${ shipping } Total: $${ total }</h4>
+
+	
 
 </%block>

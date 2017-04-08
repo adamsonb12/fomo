@@ -1,5 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db.models import Sum
+
+from catalog import models as cmod
+
 
 # The models for the Account application
 
@@ -26,6 +30,19 @@ class FomoUser(AbstractUser):
         
     birth_date = models.DateTimeField('Birth Date')
     gender = models.TextField(null=True, blank=True, choices=GENDER_CHOICES, default = 'other',)
+
+    def get_cart_count(self):
+        cart = cmod.ShoppingCart.objects.filter(user_id=self.id)
+        qty = 0
+        for c in cart:
+            qty = qty + c.quantity
+        return qty
+
+    # Don't for get to test the following
+
+    def get_cart(self):
+        cart = cmod.ShoppingCart.objects.filter(user_id=self.id)
+        return cart
 
 class ShippingAddress(models.Model):
     user = models.ForeignKey('account.FomoUser', related_name="sales")
