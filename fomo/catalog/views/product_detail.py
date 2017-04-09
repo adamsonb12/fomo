@@ -83,7 +83,7 @@ class AddToCartForm(FormMixIn, forms.Form):
 			self.product.quantity -= qty
 			self.product.save()
 		if hasattr(cart.product, 'available'):
-			if self.product.available:
+			if self.product.available == True:
 				self.product.available = False
 				self.product.save()
 			else:

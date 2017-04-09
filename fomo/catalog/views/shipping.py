@@ -30,9 +30,9 @@ def process_request(request):
 	form = ShippingForm(request, user=user)
 	if form.is_valid():
 		form.commit(user=user)
-			# sale = cmod.Sale.objects.filter(user_id=uid)
-			# sale = sale.get(user_id=uid)
-			# print('>>>>>>>>>>>>>>>>>>>>>>', sale.id)
+		# sale = cmod.Sale.objects.get(id=receipt)
+		# return HttpResponseRedirect('/catalog/shipping/${sale.id}')
+
 		return HttpResponseRedirect('/catalog/receipt/1')
 		
 
@@ -133,6 +133,7 @@ class ShippingForm(FormMixIn, forms.Form):
 
 		# record sale 
 		sale = cmod.Sale()
+		receipt = sale.id
 		sale.user = user
 		sale.sale_price = cmod.ShoppingCart.calc_subtotal(user.id)
 		sale.save()
@@ -149,6 +150,7 @@ class ShippingForm(FormMixIn, forms.Form):
 			item.save()
 
 		# sale receipt thing
+		cmod.Sale.record_sale(self.user, cart, self.cleaned_data.get('address'), self.cleaned_data.get('city'), self.cleaned_data.get('state'), self.cleaned_data.get('zipcode'), self.cleaned_data.get('stripe_token'))
 
 		#clear cart
 		for c in cart:

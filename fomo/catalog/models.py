@@ -114,7 +114,9 @@ class ShoppingCart(models.Model):
 	@staticmethod
 	def remove_item(pid, uid):
 		cart = ShoppingCart.objects.filter(user_id=uid)
-		cart = ShoppingCart.objects.filter(product_id=pid)
+		cart = cart.filter(sold=False)
+		cart = cart.filter(active=True)
+		cart = cart.filter(product_id=pid)
 		for c in cart:
 			if hasattr(c.product, 'quantity'):
 				c.product.quantity += c.quantity
@@ -123,12 +125,15 @@ class ShoppingCart(models.Model):
 				c.product.available = True
 				c.product.save()
 			c.active = False
+			c.save()
 		return 4
 
 	# clear cart
 	@staticmethod
 	def clear_cart(user_id):
 		cart = ShoppingCart.objects.filter(user_id=user_id)
+		cart = cart.filter(sold=False)
+		cart = cart.filter(active=True)
 		for c in cart:
 			if hasattr(c.product, 'quantity'):
 				c.product.quantity += c.quantity
@@ -136,7 +141,8 @@ class ShoppingCart(models.Model):
 			if hasattr(c.product, 'available'):
 				c.product.available = True
 				c.product.save()
-			c.delete()
+			c.active = False
+			c.save()
 		return 4
         
 	# Retrieve Items --> In FomoUser class
@@ -145,6 +151,8 @@ class ShoppingCart(models.Model):
 	@staticmethod
 	def calc_subtotal(user_id):
 		cart = ShoppingCart.objects.filter(user_id=user_id)
+		cart = cart.filter(sold=False)
+		cart = cart.filter(active=True)
 		total = 0
 		for c in cart:
 				total += (c.product.price*c.quantity)
@@ -157,6 +165,8 @@ class ShoppingCart(models.Model):
 	@staticmethod
 	def calc_total_amount(user_id):
 		cart = ShoppingCart.objects.filter(user_id=user_id)
+		cart = cart.filter(sold=False)
+		cart = cart.filter(active=True)
 		total = 0
 		for c in cart:
 				total += (c.product.price*c.quantity)
@@ -184,53 +194,57 @@ class Sale(models.Model):
 		# call stripe API, pass the token, and see if it returns true or false stripeResponse = 
 
 		# this if statement would check to see if the token is valid at stripe
-		if stripeResponse:
+		# if stripe_charge_token:
 			# If the stripe API returns true
-			sale = Sale()
-			sale.user = user
 
-			try:
+		sale = Sale()
+		sale.user = user
+		sale.sale_price = ShoppingCart.calc_subtotal(user.id)
+		sale.save()
 
-				for item in cart_items_list:
-					sale_item = SaleItem()
-					sale_item.sale = sale
-					sale_item.product = item.product
-					sale_item.quantity = item.quantity
-					sale_item.sale_price = item.product.sale_price
-					#call convienence method to get tax amountsale_item.tax_amount = 
-					sale_item.discount = item.discount
-					sale_item.save()
-					sale.sale_price = sale.sale_price + sale_item.sale_price
-					sale.total_tax = sale.total_tax + sale_item.tax_amount
-					if hasattr(item.product, 'quantity'):
-						item.product.quantity -= item.quantity
-					if hasattr(item.product, 'sold'):
-						item.product.sold = True
+		# try:
 
-					item.product.save()
+		for item in cart_items_list:
+			sale_item = SaleItem()
+			sale_item.sale = sale
+			sale_item.product = item.product
+			sale_item.quantity = item.quantity
+			sale_item.sale_price = item.product.price
+			sale_item.tax_amount = ShoppingCart.calc_tax(sale_item.sale_price)
+			# sale_item.discount = item.discount
+			sale_item.save()
+			sale.sale_price = sale.sale_price + sale_item.sale_price
+			sale.total_tax = ShoppingCart.calc_tax(sale.sale_price)
+			# if hasattr(item.product, 'quantity'):
+			# 	item.product.quantity -= item.quantity
+			if hasattr(item.product, 'sold'):
+				item.product.sold = True
 
-				sale.save()
+			item.product.save()
 
-				payment = Payment()
-				payment.sale = sale
-				payment.total_paid = sale.price
-				payment.save()
+		payment = Payment()
+		payment.sale = sale
+		payment.total_paid = sale.sale_price
+		payment.save()
 
-				shipping = amod.ShippingAddress()
-				shipping.shipping_address = address
-				shipping.shipping_city = city
-				shipping.shipping_state = state
-				shipping.shipping_zipcode = zipcode
+		sale.save()
 
-				shipping.save()
+		shipping = amod.ShippingAddress()
+		shipping.shipping_address = address
+		shipping.shipping_city = city
+		shipping.shipping_state = state
+		shipping.shipping_zipcode = zipcode
+		shipping.user = user
 
-				return True
+		shipping.save()
 
-			except BaseException:
-				return False
+		# except BaseException:
+		# 	return False
+
+		return 4
 
 		# Returns false if stripe returned false
-		return False
+		# return False
 
 
 	# Convienence Methods
@@ -253,7 +267,7 @@ class SaleItem(models.Model):
 
 	# Calc Tax
 	def calc_tax_amount(self):
-		self.tax_amount = self.product.price * self.tax
+		self.tax_amount = self.sale_price * self.tax
 		return self.tax_amount
 
 	# Calc total price
