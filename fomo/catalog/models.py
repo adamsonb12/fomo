@@ -90,11 +90,22 @@ class ProductHistory(models.Model):
 	product = models.ForeignKey('catalog.Product')
 	view_date = models.DateTimeField(auto_now_add=True)
 
-	# def getLastFive(user):
 
-		# Convienence Methods
+	# Convienence Methods
 		
-		# Logic here to get and return the last 5 viewed products
+	# Logic here to get and return the last 5 viewed products
+	@staticmethod
+	def get_last_five(user_id):
+		history = ProductHistory.objects.filter(user_id=user_id).order_by('-view_date')
+		last5 = []
+		# look for duplicates
+		for h in history:
+			if h.product in last5:
+				pass
+			else:
+				last5.append(h.product)
+		last5 = last5[:5]
+		return last5
 
 
 class ShoppingCart(models.Model):
@@ -213,7 +224,7 @@ class Sale(models.Model):
 			sale_item.tax_amount = ShoppingCart.calc_tax(sale_item.sale_price)
 			# sale_item.discount = item.discount
 			sale_item.save()
-			sale.sale_price = sale.sale_price + sale_item.sale_price
+			# sale.sale_price = sale.sale_price + sale_item.sale_price
 			sale.total_tax = ShoppingCart.calc_tax(sale.sale_price)
 			# if hasattr(item.product, 'quantity'):
 			# 	item.product.quantity -= item.quantity

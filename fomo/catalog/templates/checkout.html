@@ -1,5 +1,6 @@
 <%inherit file="app_base.htm" />
 <%! import json as json %>
+<%! from catalog import models as cmod %>
 
 <%block name="header_message"></%block>
 
@@ -68,7 +69,23 @@
 	<a href="/catalog/shipping"><button class="btn btn-success">Checkout Out</button> </a>
 	<a href="/catalog/checkout.clear_cart"><button class="btn btn-danger">Clear Cart</button> </a>
 	<h4 class="right"> Subtotal: $${ subtotal } Tax: $${ tax } Shipping: $${ shipping } Total: $${ total }</h4>
-
 	
 
+</%block>
+
+<%block name="right_column"> 
+
+	<%
+		uid = request.user.id
+		last5 = cmod.ProductHistory.get_last_five(uid)
+		if last5 is None:
+			last5 = []
+	%>  
+	<h4> Recently Viewed Products </h4>
+	% for l in last5:
+		<div class="last5">
+		<p> ${ l.name } </p> 
+		<a href="/catalog/product_detail/${l.id}"><img src="${ json.decoder.JSONDecoder().decode(cmod.Product.objects.get(id=l.id).imgList)[0] }" class="img-thumbnail"></a>
+		</div>
+	% endfor
 </%block>
