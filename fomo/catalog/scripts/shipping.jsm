@@ -17,7 +17,7 @@ $(function() {
 	  handler.open({
 	    name: 'Fomo',
 	    description: 'Music Store',
-	    amount: 2000
+	    amount: ${ request.user.cart_total() }
 	  });
 	  e.preventDefault();
 	});

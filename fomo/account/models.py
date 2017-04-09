@@ -50,13 +50,15 @@ class FomoUser(AbstractUser):
 
     def cart_total(self):
         cart = cmod.ShoppingCart.objects.filter(user_id=self.id)
+        cart = cart.filter(sold=False)
+        cart = cart.filter(active=True)
         total = 0
         for c in cart:
             total += (c.product.price*c.quantity)
         tax = total*cmod.ShoppingCart.objects.get(id=1).tax
         total = total+tax
-        total = total*100
-        return round(total,0)
+        total = (total+10)*100
+        return round(total,2)
 
 
 class ShippingAddress(models.Model):

@@ -167,11 +167,11 @@ class ShoppingCart(models.Model):
 		total = 0
 		for c in cart:
 				total += (c.product.price*c.quantity)
-		return decimal.Decimal(total)
+		return round(total,2)
 
 	@staticmethod
 	def calc_tax(subtotal):
-		return decimal.Decimal(subtotal*ShoppingCart.objects.get(id=1).tax)
+		return round(subtotal*ShoppingCart.objects.get(id=1).tax,2)
 
 	@staticmethod
 	def calc_total_amount(user_id):
@@ -182,7 +182,7 @@ class ShoppingCart(models.Model):
 		for c in cart:
 				total += (c.product.price*c.quantity)
 
-		return decimal.Decimal(total+(total*ShoppingCart.objects.get(id=1).tax))
+		return round(total+(total*ShoppingCart.objects.get(id=1).tax),2)
 
 
 		
@@ -211,9 +211,8 @@ class Sale(models.Model):
 		sale = Sale()
 		sale.user = user
 		sale.sale_price = ShoppingCart.calc_subtotal(user.id)
+		# receipt = sale.id
 		sale.save()
-
-		# try:
 
 		for item in cart_items_list:
 			sale_item = SaleItem()
@@ -249,14 +248,20 @@ class Sale(models.Model):
 
 		shipping.save()
 
-		# except BaseException:
-		# 	return False
+		#clear cart
+		cart = user.get_cart()
+		for c in cart:
+			if hasattr(c.product, 'sold'):
+				c.product.sold = True
+				c.product.save()
+			c.sold = True
+			c.save()
 
 		return 4
+		# return HttpResponseRedirect('/catalog/receipt/${receipt}')	
 
 		# Returns false if stripe returned false
 		# return False
-
 
 	# Convienence Methods
 
