@@ -90,11 +90,22 @@ class ProductHistory(models.Model):
 	product = models.ForeignKey('catalog.Product')
 	view_date = models.DateTimeField(auto_now_add=True)
 
-	# def getLastFive(user):
 
-		# Convienence Methods
+	# Convienence Methods
 		
-		# Logic here to get and return the last 5 viewed products
+	# Logic here to get and return the last 5 viewed products
+	@staticmethod
+	def get_last_five(user_id):
+		history = ProductHistory.objects.filter(user_id=user_id).order_by('-view_date')
+		last5 = []
+		# look for duplicates
+		for h in history:
+			if h.product in last5:
+				pass
+			else:
+				last5.append(h.product)
+		last5 = last5[:5]
+		return last5
 
 
 class ShoppingCart(models.Model):
@@ -105,8 +116,8 @@ class ShoppingCart(models.Model):
 	modified_date = models.DateTimeField(auto_now=True)
 	tax = models.DecimalField(max_digits=8, decimal_places=4, default=.0725)
 	total_shipping = models.DecimalField(max_digits=8, decimal_places=2, default=10)
-
-
+	sold = models.BooleanField(default=False)
+	active = models.BooleanField(default=True)
 
 	# Convienence Methods -- Test Still
 
@@ -114,7 +125,9 @@ class ShoppingCart(models.Model):
 	@staticmethod
 	def remove_item(pid, uid):
 		cart = ShoppingCart.objects.filter(user_id=uid)
-		cart = ShoppingCart.objects.filter(product_id=pid)
+		cart = cart.filter(sold=False)
+		cart = cart.filter(active=True)
+		cart = cart.filter(product_id=pid)
 		for c in cart:
 			if hasattr(c.product, 'quantity'):
 				c.product.quantity += c.quantity
@@ -122,13 +135,16 @@ class ShoppingCart(models.Model):
 			if hasattr(c.product, 'available'):
 				c.product.available = True
 				c.product.save()
-			c.delete()
+			c.active = False
+			c.save()
 		return 4
 
 	# clear cart
 	@staticmethod
 	def clear_cart(user_id):
 		cart = ShoppingCart.objects.filter(user_id=user_id)
+		cart = cart.filter(sold=False)
+		cart = cart.filter(active=True)
 		for c in cart:
 			if hasattr(c.product, 'quantity'):
 				c.product.quantity += c.quantity
@@ -136,7 +152,8 @@ class ShoppingCart(models.Model):
 			if hasattr(c.product, 'available'):
 				c.product.available = True
 				c.product.save()
-			c.delete()
+			c.active = False
+			c.save()
 		return 4
         
 	# Retrieve Items --> In FomoUser class
@@ -145,14 +162,29 @@ class ShoppingCart(models.Model):
 	@staticmethod
 	def calc_subtotal(user_id):
 		cart = ShoppingCart.objects.filter(user_id=user_id)
+		cart = cart.filter(sold=False)
+		cart = cart.filter(active=True)
 		total = 0
 		for c in cart:
 				total += (c.product.price*c.quantity)
-		return decimal.Decimal(total)
+		return round(total,2)
 
 	@staticmethod
 	def calc_tax(subtotal):
-		return decimal.Decimal(subtotal*ShoppingCart.objects.get(id=1).tax)
+		return round(subtotal*ShoppingCart.objects.get(id=1).tax,2)
+
+	@staticmethod
+	def calc_total_amount(user_id):
+		cart = ShoppingCart.objects.filter(user_id=user_id)
+		cart = cart.filter(sold=False)
+		cart = cart.filter(active=True)
+		total = 0
+		for c in cart:
+				total += (c.product.price*c.quantity)
+
+		return round(total+(total*ShoppingCart.objects.get(id=1).tax),2)
+
+
 		
 
 
@@ -173,54 +205,63 @@ class Sale(models.Model):
 		# call stripe API, pass the token, and see if it returns true or false stripeResponse = 
 
 		# this if statement would check to see if the token is valid at stripe
-		if stripeResponse:
+		# if stripe_charge_token:
 			# If the stripe API returns true
-			sale = Sale()
-			sale.user = user
 
-			try:
+		sale = Sale()
+		sale.user = user
+		sale.sale_price = ShoppingCart.calc_subtotal(user.id)
+		# receipt = sale.id
+		sale.save()
 
-				for item in cart_items_list:
-					sale_item = SaleItem()
-					sale_item.sale = sale
-					sale_item.product = item.product
-					sale_item.quantity = item.quantity
-					sale_item.sale_price = item.product.sale_price
-					#call convienence method to get tax amountsale_item.tax_amount = 
-					sale_item.discount = item.discount
-					sale_item.save()
-					sale.sale_price = sale.sale_price + sale_item.sale_price
-					sale.total_tax = sale.total_tax + sale_item.tax_amount
-					if hasattr(item.product, 'quantity'):
-						item.product.quantity -= item.quantity
-					if hasattr(item.product, 'sold'):
-						item.product.sold = True
+		for item in cart_items_list:
+			sale_item = SaleItem()
+			sale_item.sale = sale
+			sale_item.product = item.product
+			sale_item.quantity = item.quantity
+			sale_item.sale_price = item.product.price
+			sale_item.tax_amount = ShoppingCart.calc_tax(sale_item.sale_price)
+			# sale_item.discount = item.discount
+			sale_item.save()
+			# sale.sale_price = sale.sale_price + sale_item.sale_price
+			sale.total_tax = ShoppingCart.calc_tax(sale.sale_price)
+			# if hasattr(item.product, 'quantity'):
+			# 	item.product.quantity -= item.quantity
+			if hasattr(item.product, 'sold'):
+				item.product.sold = True
 
-					item.product.save()
+			item.product.save()
 
-				sale.save()
+		payment = Payment()
+		payment.sale = sale
+		payment.total_paid = sale.sale_price
+		payment.save()
 
-				payment = Payment()
-				payment.sale = sale
-				payment.total_paid = sale.price
-				payment.save()
+		sale.save()
 
-				shipping = amod.ShippingAddress()
-				shipping.shipping_address = address
-				shipping.shipping_city = city
-				shipping.shipping_state = state
-				shipping.shipping_zipcode = zipcode
+		shipping = amod.ShippingAddress()
+		shipping.shipping_address = address
+		shipping.shipping_city = city
+		shipping.shipping_state = state
+		shipping.shipping_zipcode = zipcode
+		shipping.user = user
 
-				shipping.save()
+		shipping.save()
 
-				return True
+		#clear cart
+		cart = user.get_cart()
+		for c in cart:
+			if hasattr(c.product, 'sold'):
+				c.product.sold = True
+				c.product.save()
+			c.sold = True
+			c.save()
 
-			except BaseException:
-				return False
+		return 4
+		# return HttpResponseRedirect('/catalog/receipt/${receipt}')	
 
 		# Returns false if stripe returned false
-		return False
-
+		# return False
 
 	# Convienence Methods
 
@@ -231,18 +272,19 @@ class SaleItem(models.Model):
 	discount = models.DecimalField(max_digits=8, decimal_places=2, null=True)
 	tax = models.DecimalField(max_digits=8, decimal_places=4, default=.0725)
 	tax_amount = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+	quantity = models.IntegerField(default=1)
 
 	# Convienence Methods
 
 	# Calc Price
 	def calc_sale_price(self):
-		self.sale_price = self.product.price
+		self.sale_price = self.product.price*self.quantity
 		return decimal.Decimal(self.sale_price)
 
 	# Calc Tax
 	def calc_tax_amount(self):
-		self.tax_amount = self.sale_price*self.tax
-		return decimal.Decimal(self.tax_amount)
+		self.tax_amount = self.sale_price * self.tax
+		return self.tax_amount
 
 	# Calc total price
 	def calc_total_price(self):

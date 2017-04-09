@@ -19,14 +19,15 @@ def process_request(request):
 		jsonDec = json.decoder.JSONDecoder()
 		dList = jsonDec.decode(product.descriptionList)
 		iList = jsonDec.decode(product.imgList)
+		user = amod.FomoUser.objects.get(id=request.user.id)
 	except cmod.Product.DoesNotExist:
 		return HttpResponseRedirect('/manager/products/')
 
-	# Add to last five
-	for l in request.last5:
-		if(product.id == l):
-			request.last5.remove(product.id)
-	request.last5.insert(0, product.id)
+	# Add to last five -> actually product history
+	new_prod = cmod.ProductHistory()
+	new_prod.user = user
+	new_prod.product = product
+	new_prod.save()
 
 	form = AddToCartForm(request, product=product)
 	if form.is_valid():
@@ -83,7 +84,7 @@ class AddToCartForm(FormMixIn, forms.Form):
 			self.product.quantity -= qty
 			self.product.save()
 		if hasattr(cart.product, 'available'):
-			if self.product.available:
+			if self.product.available == True:
 				self.product.available = False
 				self.product.save()
 			else:

@@ -46,3 +46,20 @@
 	% endfor
 
 </%block>
+
+<%block name="right_column"> 
+
+	<%
+		uid = request.user.id
+		last5 = cmod.ProductHistory.get_last_five(uid)
+		if last5 is None:
+			last5 = []
+	%>  
+	<h4> Recently Viewed Products </h4>
+	% for l in last5:
+		<div class="last5">
+		<p> ${ l.name } </p> 
+		<a href="/catalog/product_detail/${l.id}"><img src="${ json.decoder.JSONDecoder().decode(cmod.Product.objects.get(id=l.id).imgList)[0] }" class="img-thumbnail"></a>
+		</div>
+	% endfor
+</%block>

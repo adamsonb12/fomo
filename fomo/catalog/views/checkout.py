@@ -16,8 +16,13 @@ def process_request(request):
 
 	try:
 		cart = cmod.ShoppingCart.objects.filter(user_id=uid)
+		cart = cart.filter(sold=False)
+		cart = cart.filter(active=True)
 	except cmod.Category.DoesNotExist:
 		return HttpResponseRedirect('/homepage/')
+
+	if len(cart) == 0:
+		return HttpResponseRedirect('/catalog/emptycart')
 
 	subtotal = cmod.ShoppingCart.calc_subtotal(uid) 
 	tax = cmod.ShoppingCart.calc_tax(subtotal)

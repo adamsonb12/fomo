@@ -56,7 +56,7 @@ class AccountEditForm(FormMixIn, forms.Form):
 
 	def commit(self, user):
 
-		## see if the new username is uniqu
+		## see if the new username is unique
 		un = self.cleaned_data.get('username')
 		users = amod.FomoUser.objects.filter(username=un).exclude(id=user.id )
 

@@ -167,6 +167,7 @@ dList = ['Violin hand made in 1456', 'Played be Bach and Beethoved', 'Korys favo
 p1.descriptionList = json.dumps(dList)
 iList = ['/static/homepage/media/img/violin.jpg', '/static/homepage/media/img/violin2.png', '/static/homepage/media/img/violin3.jpg', '/static/homepage/media/img/thumbnail_violin.jpg']
 p1.imgList = json.dumps(iList)
+p1.available = True
 p1.save()
 
 # Create a Unique Product
@@ -180,6 +181,7 @@ dList = ['Clarinet from Mordor', 'Played by Sauron and his minions', 'Alexs favo
 p2.descriptionList = json.dumps(dList)
 iList = ['/static/homepage/media/img/clar1.jpg', '/static/homepage/media/img/clar2.jpg']
 p2.imgList = json.dumps(iList)
+p2.available = True
 p2.save()
 
 # Create a Unique Product
@@ -193,6 +195,7 @@ dList = ['Trumpet forged in the fires of Mount Doom', 'Isuldurs Bane', 'The inst
 p3.descriptionList = json.dumps(dList)
 iList = ['/static/homepage/media/img/trump1.jpg', '/static/homepage/media/img/trump2.jpg', '/static/homepage/media/img/trump3.png', '/static/homepage/media/img/trump4.png']
 p3.imgList = json.dumps(iList)
+p3.available = True
 p3.save()
 
 # Create a Bulk Product
@@ -248,6 +251,7 @@ dList = ['Rent this Brass', 'My Brass is better than your rental brass', 'Trump 
 p7.descriptionList = json.dumps(dList)
 iList = ['/static/homepage/media/img/trump1.jpg', '/static/homepage/media/img/trump2.jpg', '/static/homepage/media/img/trump3.png', '/static/homepage/media/img/trump4.png']
 p7.imgList = json.dumps(iList)
+p7.available = True
 p7.save()
 
 # Create a Rental Product
@@ -261,6 +265,7 @@ dList = ['The Tuba from Tattoine', 'Help me Tuba, youre my only hope', 'Han Solo
 p8.descriptionList = json.dumps(dList)
 iList = ['/static/homepage/media/img/tuba1.jpg', '/static/homepage/media/img/tuba2.jpg', '/static/homepage/media/img/tuba3.jpg']
 p8.imgList = json.dumps(iList)
+p8.available = True
 p8.save()
 
 # Create a Rental Product
@@ -274,7 +279,44 @@ dList = ['Brass Trombone', 'Made in the Mustafar System', 'Darth Vaders least fa
 p9.descriptionList = json.dumps(dList)
 iList = ['/static/homepage/media/img/trom1.jpg', '/static/homepage/media/img/trom2.jpg']
 p9.imgList = json.dumps(iList)
+p9.available = True
 p9.save()
+
+cart = cmod.ShoppingCart()
+cart.user = user1
+cart.product = p1
+cart.quantity = 1
+cart.save()
+
+cart = cmod.ShoppingCart()
+cart.user = user2
+cart.product = p2
+cart.quantity = 1
+cart.save()
+
+cart = cmod.ShoppingCart()
+cart.user = user3
+cart.product = p4
+cart.quantity = 4
+cart.save()
+
+sale = cmod.Sale()
+sale.user = user1
+sale.sale_price = cmod.ShoppingCart.calc_subtotal(p1.id)
+sale.total_tax = cmod.ShoppingCart.calc_tax(sale.sale_price)
+sale.save()
+
+sale = cmod.Sale()
+sale.user = user2
+sale.sale_price = cmod.ShoppingCart.calc_subtotal(p1.id)
+sale.total_tax = cmod.ShoppingCart.calc_tax(sale.sale_price)
+sale.save()
+
+sale = cmod.Sale()
+sale.user = user3
+sale.sale_price = cmod.ShoppingCart.calc_subtotal(p1.id)
+sale.total_tax = cmod.ShoppingCart.calc_tax(sale.sale_price)
+sale.save()
 
 
 # for p in Permission.objects.all():

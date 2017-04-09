@@ -1,14 +1,2 @@
 <%inherit file="/homepage/templates/base.htm"/>
 
-<%! from catalog import models as cmod %>
-<%! import json as json %>
-
-<%block name="right_column"> 
-	<h4> Recently Viewed Products </h4>
-	% for l in request.last5:
-		<div class="last5">
-		<p> ${cmod.Product.objects.get(id=l).name} </p> 
-		<a href="/catalog/product_detail/${l}"><img src="${ json.decoder.JSONDecoder().decode(cmod.Product.objects.get(id=l).imgList)[0] }" class="img-thumbnail"></a>
-		</div>
-	% endfor
-</%block>
