@@ -58,7 +58,7 @@ class FomoUser(AbstractUser):
         tax = total*cmod.ShoppingCart.objects.get(id=1).tax
         total = total+tax
         total = (total+10)*100
-        return round(total,2)
+        return round(total,0)
 
 
 class ShippingAddress(models.Model):
